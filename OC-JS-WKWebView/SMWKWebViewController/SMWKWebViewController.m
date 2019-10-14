@@ -20,14 +20,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_initWithFrame"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_backgroundColor"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_buttonWithType"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_addTargetActionForControlEvents"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_setTitleForState"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_setTitleColorForState"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_setImageForState"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_buttonTitleLabelFont"];
-
+   
     
     
 }
@@ -35,13 +28,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"oh_initWithFrame"];
-    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"oh_backgroundColor"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_buttonWithType"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_addTargetActionForControlEvents"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_setTitleForState"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_setTitleColorForState"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_setImageForState"];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_buttonTitleLabelFont"];
+   
 
     
 }

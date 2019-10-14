@@ -12,6 +12,7 @@
 @interface SMWKWebViewController ()<WKScriptMessageHandler, WKNavigationDelegate>
 
 @property (nonatomic, strong) WKWebView *wkWebView;
+@property (nonatomic, strong) UIProgressView * progressView;
 
 @end
 
@@ -20,7 +21,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_initWithFrame"];
-   
+    
     
     
 }
@@ -28,13 +29,13 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"oh_initWithFrame"];
-   
-
+    
+    
     
 }
 
 - (void)pressBackButton:(UIButton *)sender{
-
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -46,7 +47,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     
-    
+    //返回按钮
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(0, 2, 40, 26);
     rightBtn.backgroundColor = [UIColor clearColor];
@@ -55,46 +56,51 @@
     UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.leftBarButtonItem = barIten;
     
-    
-    
-    [self loadWebView];
-    
-    
-    
-}
-
-//加载本地的html文件
-- (void)loadWebView
-{
-    
+    //加载本地的html文件
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-    
-    WKUserContentController *userCC = config.userContentController;
-    //JS调用OC 添加处理脚本
-    
-    self.wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(10, 100, 20, 20) configuration:config];
+    self.wkWebView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
     self.wkWebView.UIDelegate = self;
     self.wkWebView.navigationDelegate = self;
-    
-    NSString *path = [[NSBundle mainBundle] bundlePath];
-    NSURL *baseURL = [NSURL fileURLWithPath:path];
-    NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
-    
-    
-    NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
-                                                   encoding:NSUTF8StringEncoding
-                                                      error:nil];
-    [self.wkWebView loadHTMLString:htmlCont baseURL:baseURL];
-    
+    [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
     [self.view addSubview:self.wkWebView];
+    
+    CGFloat progressBarHeight = 3.f;
+    CGRect barFrame = CGRectMake(0, 0, self.view.frame.size.width, progressBarHeight);
+    self.progressView = [[UIProgressView alloc]initWithFrame:barFrame];
+    self.progressView.progressTintColor = [UIColor colorWithRed:0/255.0 green:159/255.0 blue:255/255.0 alpha:1];
+    self.progressView.trackTintColor = [UIColor clearColor];
+    [self.view addSubview:self.progressView];
+    
+    [self.wkWebView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:nil];
+    [self.wkWebView addObserver:self
+                     forKeyPath:@"title"
+                        options:NSKeyValueObservingOptionNew
+                        context:nil];
     
     
 }
 
-
-
-
-
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    if ([keyPath isEqual:@"estimatedProgress"] && object == self.wkWebView) {
+        [self.progressView setAlpha:1.0f];
+        [self.progressView setProgress:self.wkWebView.estimatedProgress animated:YES];
+        if (self.wkWebView.estimatedProgress  >= 1.0f) {
+            [UIView animateWithDuration:0.3 delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.progressView setAlpha:0.0f];
+            } completion:^(BOOL finished) {
+                [self.progressView setProgress:0.0f animated:YES];
+            }];
+        }
+    }
+    else if ([keyPath isEqualToString:@"title"]) {
+        
+        self.title = self.wkWebView.title;
+        
+    }
+    else{
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
 
 #pragma mark - navigationDelegate
 
@@ -145,13 +151,25 @@
     
     NSLog(@"url =========== %@", navigationAction.request.URL);
     
+    NSString * strRequest = [NSString stringWithFormat:@"%@", navigationAction.request.URL];
+
+    
+    if ([strRequest isEqualToString:self.urlString]) {
+        decisionHandler(WKNavigationActionPolicyAllow);
+        return;
+    }
+    
+    SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+    webViewController.urlString = strRequest;
+    [self.navigationController pushViewController:webViewController animated:YES];
+    
     
     
     //允许跳转
-    decisionHandler(WKNavigationActionPolicyAllow);
+//    decisionHandler(WKNavigationActionPolicyAllow);
     
     //不允许跳转
-    //        decisionHandler(WKNavigationActionPolicyCancel);
+    decisionHandler(WKNavigationActionPolicyCancel);
     NSLog(@"在请求发送之前，决定是否跳转 1");
 }
 
@@ -190,36 +208,6 @@
         [self oh_initWithFrame:array];
         
     }
-    if ([message.name isEqualToString:@"oh_backgroundColor"]) {//背景颜色
-        
-        NSArray *array = message.body;
-        [self oh_backgroundColor:array];
-        
-    }
-    if ([message.name isEqualToString:@"oh_buttonWithType"]){//初始化按钮和样式
-        NSArray *array = message.body;
-        [self oh_buttonWithType:array];
-    }
-    if ([message.name isEqualToString:@"oh_addTargetActionForControlEvents"]) {//按钮点击事件
-        NSArray *array = message.body;
-        [self oh_addTargetActionForControlEvents:array];
-    }
-    if ([message.name isEqualToString:@"oh_setTitleForState"]) {//按钮上的文字
-        NSArray *array = message.body;
-        [self oh_setTitleForState:array];
-    }
-    if ([message.name isEqualToString:@"oh_setTitleColorForState"]) {//按钮上的文字颜色
-        NSArray *array = message.body;
-        [self oh_setTitleColorForState:array];
-    }
-    if ([message.name isEqualToString:@"oh_setImageForState"]) {//按钮上的图片
-        NSArray *array = message.body;
-        [self oh_setImageForState:array];
-    }
-    if ([message.name isEqualToString:@"oh_buttonTitleLabelFont"]){//按钮上文字的大小
-        NSArray *array = message.body;
-        [self oh_buttonTitleLabelFont:array];
-    }
     
     
 }
@@ -227,186 +215,13 @@
 #pragma mark - UI控件的调用
 
 
-- (void)oh_init{
-    
-    
-}
+
 //初始化控件
 - (void)oh_initWithFrame:(NSArray *)model{
-    if (model.count < 6) {
-        return;
-    }
     
-    NSString * getView = (NSString *)[model objectAtIndex:0];
-    NSString * getTag = (NSString *)[model objectAtIndex:1];
-    NSString * x = (NSString *)[model objectAtIndex:2];
-    NSString * y = (NSString *)[model objectAtIndex:3];
-    NSString * width = (NSString *)[model objectAtIndex:4];
-    NSString * height = (NSString *)[model objectAtIndex:5];
-    
-    
-    
-    if ([getView isEqualToString:@"UIView"]) {
-        
-        UIView * selectView = [[UIView alloc] initWithFrame:CGRectMake([x floatValue], [y floatValue], [width floatValue], [height floatValue])];
-        selectView.tag = [getTag integerValue];
-        [self.view addSubview:selectView];
-        
-    }else if ([getView isEqualToString:@"UIButton"]){
-        
-        
-        NSArray * butArray = [NSArray arrayWithObjects:getTag, @"1", nil];
-        [self oh_buttonWithType:butArray];
-        
-        UIButton * ohButton = [self.view viewWithTag:getTag.integerValue];
-        ohButton.frame = CGRectMake([x floatValue], [y floatValue], [width floatValue], [height floatValue]);
-        
-        
-    }else if ([getView isEqualToString:@"UIImageView"]){
-        
-        UIImageView * selectView = [[UIImageView alloc] initWithFrame:CGRectMake([x floatValue], [y floatValue], [width floatValue], [height floatValue])];
-        selectView.tag = [getTag integerValue];
-        [self.view addSubview:selectView];
-        
-    }
-    
-}
-
-//控件背景颜色
-- (void)oh_backgroundColor:(NSArray *)model{
-    
-    if (model.count < 5) {
-        return;
-    }
-    NSString * getTag = (NSString *)[model objectAtIndex:0];
-    NSString * red = (NSString *)[model objectAtIndex:1];
-    NSString * green = (NSString *)[model objectAtIndex:2];
-    NSString * blue = (NSString *)[model objectAtIndex:3];
-    NSString * alpha = (NSString *)[model objectAtIndex:4];
-    
-    
-    float redFloat = [red floatValue];
-    float greenFloat = [green floatValue];
-    float blueFloat = [blue floatValue];
-    float alphaFloat = [alpha floatValue];
-    UIView * ohView = [self.view viewWithTag:[getTag integerValue]];
-    ohView.backgroundColor = [UIColor colorWithRed:redFloat/255.0 green:greenFloat/255.0 blue:blueFloat/255.0 alpha:alphaFloat];
     
     
 }
 
-#pragma mark - UIButton
-
-- (void)oh_buttonWithType:(NSArray *)buttonType{//初始化按钮
-    
-    if (buttonType.count < 2) {
-        return;
-    }
-    
-    
-    NSString * getTag = (NSString *)[buttonType objectAtIndex:0];
-    NSString * type = (NSString *)[buttonType objectAtIndex:1];
-    
-    UIButton * ohButton = [UIButton buttonWithType:type.integerValue];
-    ohButton.tag = [getTag integerValue];
-    [self.view addSubview:ohButton];
-    
-
-}
-
-- (void)oh_addTargetActionForControlEvents:(NSArray *)addArray{//按钮点击事件
-    
-    if (addArray.count < 2) {
-        return;
-    }
-    
-    
-    NSString * getTag = (NSString *)[addArray objectAtIndex:0];
-    NSString * type = (NSString *)[addArray objectAtIndex:1];
-    
-    UIButton * ohButton = [self.view viewWithTag:getTag.integerValue];
-    [ohButton addTarget:self action:@selector(pressOhButton:) forControlEvents:type.integerValue];
-
-    
-}
-
-- (void)pressOhButton:(UIButton *)sender{//按钮点击方法
-    
-    NSInteger tag = sender.tag;
-    NSString * funcStr = [NSString stringWithFormat:@"pressOhButton(%ld)", (long)tag];
-    [self.wkWebView evaluateJavaScript:funcStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
-        //TODO
-        NSLog(@"%@ %@",response,error);
-    }];
-    
-}
-
-- (void)oh_setTitleForState:(NSArray *)titleArray{//按钮上的文字
-    
-    
-    if (titleArray.count < 3) {
-        return;
-    }
-    
-    
-    NSString * getTag = (NSString *)[titleArray objectAtIndex:0];
-    NSString * titleString = (NSString *)[titleArray objectAtIndex:1];
-    NSString * type = (NSString *)[titleArray objectAtIndex:2];
-
-    
-    UIButton * ohButton = [self.view viewWithTag:getTag.integerValue];
-    [ohButton setTitle:titleString forState:type.integerValue];
-
-}
-
-- (void)oh_setTitleColorForState:(NSArray *)titleArray{//按钮上文字颜色
-    if (titleArray.count < 6) {
-        return;
-    }
-    NSString * getTag = (NSString *)[titleArray objectAtIndex:0];
-    NSString * red = (NSString *)[titleArray objectAtIndex:1];
-    NSString * green = (NSString *)[titleArray objectAtIndex:2];
-    NSString * blue = (NSString *)[titleArray objectAtIndex:3];
-    NSString * alpha = (NSString *)[titleArray objectAtIndex:4];
-    NSString * type = (NSString *)[titleArray objectAtIndex:5];
-    
-    float redFloat = [red floatValue];
-    float greenFloat = [green floatValue];
-    float blueFloat = [blue floatValue];
-    float alphaFloat = [alpha floatValue];
-    
-    UIButton * ohButton = [self.view viewWithTag:getTag.integerValue];
-    [ohButton setTitleColor:[UIColor colorWithRed:redFloat/255.0 green:greenFloat/255.0 blue:blueFloat/255.0 alpha:alphaFloat] forState:type.integerValue];
-    
-    
-
-}
-
-- (void)oh_buttonTitleLabelFont:(NSArray *)fontArray{// 按钮上文字的大小
-    if (fontArray.count < 2) {
-        return;
-    }
-    NSString * getTag = (NSString *)[fontArray objectAtIndex:0];
-    NSString * font = (NSString *)[fontArray objectAtIndex:1];
-    UIButton * ohButton = [self.view viewWithTag:getTag.integerValue];
-    ohButton.titleLabel.font = [UIFont systemFontOfSize:font.integerValue];
-
-    
-}
-
-
-- (void)oh_setImageForState:(NSArray *)imageArray{//按钮上的图片
-    if (imageArray.count < 3) {
-        return;
-    }
-    NSString * getTag = (NSString *)[imageArray objectAtIndex:0];
-    NSString * imageStr = (NSString *)[imageArray objectAtIndex:1];
-    NSString * type = (NSString *)[imageArray objectAtIndex:2];
-
-    
-    UIButton * ohButton = [self.view viewWithTag:getTag.integerValue];
-    [ohButton setImage:[UIImage imageNamed:imageStr] forState:type.integerValue];
-
-}
 
 @end

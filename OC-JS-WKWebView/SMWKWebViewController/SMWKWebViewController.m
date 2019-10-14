@@ -152,7 +152,23 @@
     NSLog(@"url =========== %@", navigationAction.request.URL);
     
     NSString * strRequest = [NSString stringWithFormat:@"%@", navigationAction.request.URL];
-
+    
+    NSString *scheme = [navigationAction.request.URL scheme];
+    
+    //h5页面打电话 单独处理
+    if ([scheme isEqualToString:@"tel"]) {
+        
+        
+        NSString *callPhone = [NSString stringWithFormat:@"telprompt://%@", [navigationAction.request.URL resourceSpecifier]];
+        /// 防止iOS 10及其之后，拨打电话系统弹出框延迟出现
+        //        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:callPhone]];
+        //        });
+        
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
+    
     
     if ([strRequest isEqualToString:self.urlString]) {
         decisionHandler(WKNavigationActionPolicyAllow);
@@ -166,7 +182,7 @@
     
     
     //允许跳转
-//    decisionHandler(WKNavigationActionPolicyAllow);
+    //    decisionHandler(WKNavigationActionPolicyAllow);
     
     //不允许跳转
     decisionHandler(WKNavigationActionPolicyCancel);

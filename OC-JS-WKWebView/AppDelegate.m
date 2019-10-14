@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "SMWKWebViewController.h"
+#import "SMNavigationController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+
+
+
+
     return YES;
 }
 
@@ -37,5 +43,28 @@
     // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
 }
 
++(UIWindow*)getWindow {
+
+    UIWindow* win = nil; //[UIApplication sharedApplication].keyWindow;
+
+    for (id item in [UIApplication sharedApplication].windows) {
+
+        if([item class] == [UIWindow class]) {
+
+            if(!((UIWindow*)item).hidden) {
+
+                win = item;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    return win;
+
+}
 
 @end

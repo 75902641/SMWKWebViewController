@@ -20,7 +20,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_initWithFrame"];
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"oh_initWithFrame"];//注入h5调取oc的方法
     
     
     
@@ -28,7 +28,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"oh_initWithFrame"];
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"oh_initWithFrame"];//取消h5调取oc的方法
     
     
     
@@ -218,7 +218,7 @@
     NSLog(@"message.name = %@",message.name);
     NSLog(@"message.body = %@",message.body);
     
-    if ([message.name isEqualToString:@"oh_initWithFrame"]) {//初始化和frame
+    if ([message.name isEqualToString:@"oh_initWithFrame"]) {//js调取OC的函数
         
         NSArray *array = message.body;
         [self oh_initWithFrame:array];
@@ -232,7 +232,7 @@
 
 
 
-//初始化控件
+//oc函数具体的实现
 - (void)oh_initWithFrame:(NSArray *)model{
     
     

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		67F7AD4C235410320072031F /* File.html in Resources */ = {isa = PBXBuildFile; fileRef = 67F7AD4B235410320072031F /* File.html */; };
+		67F7AD502354381B0072031F /* SMWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F7AD4F2354381B0072031F /* SMWKWebViewController.m */; };
+		67F7AD5323543A830072031F /* SMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F7AD5223543A820072031F /* SMNavigationController.m */; };
+		67F7AD5623543E360072031F /* arrow_left_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F7AD5523543E350072031F /* arrow_left_back@2x.png */; };
 		67FF74DC23540C3D0022B1D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF74DB23540C3D0022B1D4 /* AppDelegate.m */; };
 		67FF74DF23540C3D0022B1D4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF74DE23540C3D0022B1D4 /* SceneDelegate.m */; };
 		67FF74E223540C3D0022B1D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF74E123540C3D0022B1D4 /* ViewController.m */; };
@@ -19,7 +22,12 @@
 
 /* Begin PBXFileReference section */
 		67F7AD4B235410320072031F /* File.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = File.html; sourceTree = "<group>"; };
-		67FF74D723540C3D0022B1D4 /* OC-JS-WKWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OC-JS-WKWebView.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		67F7AD4E2354381B0072031F /* SMWKWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMWKWebViewController.h; sourceTree = "<group>"; };
+		67F7AD4F2354381B0072031F /* SMWKWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMWKWebViewController.m; sourceTree = "<group>"; };
+		67F7AD5123543A820072031F /* SMNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMNavigationController.h; sourceTree = "<group>"; };
+		67F7AD5223543A820072031F /* SMNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMNavigationController.m; sourceTree = "<group>"; };
+		67F7AD5523543E350072031F /* arrow_left_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_left_back@2x.png"; sourceTree = "<group>"; };
+		67FF74D723540C3D0022B1D4 /* pushAndPop动画.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pushAndPop动画.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FF74DA23540C3D0022B1D4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67FF74DB23540C3D0022B1D4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		67FF74DD23540C3D0022B1D4 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -31,10 +39,6 @@
 		67FF74E923540C3F0022B1D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		67FF74EB23540C3F0022B1D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67FF74EC23540C3F0022B1D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		67FF74F623540C3F0022B1D4 /* OC_JS_WKWebViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OC_JS_WKWebViewTests.m; sourceTree = "<group>"; };
-		67FF74F823540C3F0022B1D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		67FF750123540C3F0022B1D4 /* OC_JS_WKWebViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OC_JS_WKWebViewUITests.m; sourceTree = "<group>"; };
-		67FF750323540C3F0022B1D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,13 +52,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		67F7AD4D235437EF0072031F /* SMWKWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				67F7AD5423543E2A0072031F /* image */,
+				67F7AD4E2354381B0072031F /* SMWKWebViewController.h */,
+				67F7AD4F2354381B0072031F /* SMWKWebViewController.m */,
+			);
+			path = SMWKWebViewController;
+			sourceTree = "<group>";
+		};
+		67F7AD5423543E2A0072031F /* image */ = {
+			isa = PBXGroup;
+			children = (
+				67F7AD5523543E350072031F /* arrow_left_back@2x.png */,
+			);
+			path = image;
+			sourceTree = "<group>";
+		};
 		67FF74CE23540C3D0022B1D4 = {
 			isa = PBXGroup;
 			children = (
 				67F7AD4B235410320072031F /* File.html */,
 				67FF74D923540C3D0022B1D4 /* OC-JS-WKWebView */,
-				67FF74F523540C3F0022B1D4 /* OC-JS-WKWebViewTests */,
-				67FF750023540C3F0022B1D4 /* OC-JS-WKWebViewUITests */,
 				67FF74D823540C3D0022B1D4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,7 +82,7 @@
 		67FF74D823540C3D0022B1D4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				67FF74D723540C3D0022B1D4 /* OC-JS-WKWebView.app */,
+				67FF74D723540C3D0022B1D4 /* pushAndPop动画.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +90,7 @@
 		67FF74D923540C3D0022B1D4 /* OC-JS-WKWebView */ = {
 			isa = PBXGroup;
 			children = (
+				67F7AD4D235437EF0072031F /* SMWKWebViewController */,
 				67FF74DA23540C3D0022B1D4 /* AppDelegate.h */,
 				67FF74DB23540C3D0022B1D4 /* AppDelegate.m */,
 				67FF74DD23540C3D0022B1D4 /* SceneDelegate.h */,
@@ -81,26 +102,10 @@
 				67FF74E823540C3F0022B1D4 /* LaunchScreen.storyboard */,
 				67FF74EB23540C3F0022B1D4 /* Info.plist */,
 				67FF74EC23540C3F0022B1D4 /* main.m */,
+				67F7AD5123543A820072031F /* SMNavigationController.h */,
+				67F7AD5223543A820072031F /* SMNavigationController.m */,
 			);
 			path = "OC-JS-WKWebView";
-			sourceTree = "<group>";
-		};
-		67FF74F523540C3F0022B1D4 /* OC-JS-WKWebViewTests */ = {
-			isa = PBXGroup;
-			children = (
-				67FF74F623540C3F0022B1D4 /* OC_JS_WKWebViewTests.m */,
-				67FF74F823540C3F0022B1D4 /* Info.plist */,
-			);
-			path = "OC-JS-WKWebViewTests";
-			sourceTree = "<group>";
-		};
-		67FF750023540C3F0022B1D4 /* OC-JS-WKWebViewUITests */ = {
-			isa = PBXGroup;
-			children = (
-				67FF750123540C3F0022B1D4 /* OC_JS_WKWebViewUITests.m */,
-				67FF750323540C3F0022B1D4 /* Info.plist */,
-			);
-			path = "OC-JS-WKWebViewUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,7 +125,7 @@
 			);
 			name = "OC-JS-WKWebView";
 			productName = "OC-JS-WKWebView";
-			productReference = 67FF74D723540C3D0022B1D4 /* OC-JS-WKWebView.app */;
+			productReference = 67FF74D723540C3D0022B1D4 /* pushAndPop动画.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -163,6 +168,7 @@
 				67F7AD4C235410320072031F /* File.html in Resources */,
 				67FF74EA23540C3F0022B1D4 /* LaunchScreen.storyboard in Resources */,
 				67FF74E723540C3F0022B1D4 /* Assets.xcassets in Resources */,
+				67F7AD5623543E360072031F /* arrow_left_back@2x.png in Resources */,
 				67FF74E523540C3D0022B1D4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,6 +180,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67F7AD502354381B0072031F /* SMWKWebViewController.m in Sources */,
+				67F7AD5323543A830072031F /* SMNavigationController.m in Sources */,
 				67FF74E223540C3D0022B1D4 /* ViewController.m in Sources */,
 				67FF74DC23540C3D0022B1D4 /* AppDelegate.m in Sources */,
 				67FF74ED23540C3F0022B1D4 /* main.m in Sources */,
@@ -325,7 +333,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vodone.o2o-bjguahao.demander.Interaction.OC-JS-WKWebView";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "pushAndPop动画";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -342,7 +350,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vodone.o2o-bjguahao.demander.Interaction.OC-JS-WKWebView";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "pushAndPop动画";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

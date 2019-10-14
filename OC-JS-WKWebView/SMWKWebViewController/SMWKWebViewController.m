@@ -65,7 +65,7 @@
     [self.view addSubview:self.wkWebView];
     
     CGFloat progressBarHeight = 3.f;
-    CGRect barFrame = CGRectMake(0, 0, self.view.frame.size.width, progressBarHeight);
+    CGRect barFrame = CGRectMake(0, 44 + [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, progressBarHeight);
     self.progressView = [[UIProgressView alloc]initWithFrame:barFrame];
     self.progressView.progressTintColor = [UIColor colorWithRed:0/255.0 green:159/255.0 blue:255/255.0 alpha:1];
     self.progressView.trackTintColor = [UIColor clearColor];
@@ -175,9 +175,16 @@
         return;
     }
     
-    SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
-    webViewController.urlString = strRequest;
-    [self.navigationController pushViewController:webViewController animated:YES];
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strRequest]]) {
+        SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+           webViewController.urlString = strRequest;
+           [self.navigationController pushViewController:webViewController animated:YES];
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
+    
+    
+   
     
     
     

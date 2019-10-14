@@ -31,6 +31,7 @@
 - (void)pressWkwebViewButton:(UIButton *)sender{
     
     SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+    webViewController.urlString = @"https://www.baidu.com";
     [self.navigationController pushViewController:webViewController animated:YES];
     
 }

@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SMWKWebViewController : UIViewController
+@property (nonatomic, copy)NSString * urlString;
 
 @end
 

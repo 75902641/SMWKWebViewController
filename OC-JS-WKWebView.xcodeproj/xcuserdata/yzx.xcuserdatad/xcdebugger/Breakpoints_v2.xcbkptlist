@@ -7,38 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2915FDA2-B628-4A8B-85EA-6334D0134B03"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OC-JS-WKWebView/SMWKWebViewController/SMWKWebViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
-            landmarkName = "-webView:decidePolicyForNavigationAction:decisionHandler:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "224E4FB0-C124-4619-82A8-0CBF01F8BCC8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OC-JS-WKWebView/SMWKWebViewController/SMWKWebViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "-webView:didFinishNavigation:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C20367CB-4018-442A-A8D0-ABE79D062A02"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -46,41 +14,57 @@
             filePath = "OC-JS-WKWebView/SMWKWebViewController/SMWKWebViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "-webView:didFailProvisionalNavigation:withError:"
-            landmarkType = "7">
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "SMWKWebViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "46380A94-FF7B-4735-A62E-AE37FCB593D8"
+            uuid = "4B9EF993-AFE5-4CFF-89AB-B7C705AC98FA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OC-JS-WKWebView/SMWKWebViewController/SMWKWebViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
-            landmarkName = "-webView:didFailNavigation:withError:"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
+            landmarkName = "-getDeviceToken:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B9FF6A1A-C32A-4162-8386-BDE0309F2895"
+            uuid = "8D78F013-203B-449A-8B0B-E8BBF90A387D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OC-JS-WKWebView/SMWKWebViewController/SMWKWebViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "-webView:didFinishNavigation:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9A69EB05-D04D-4F09-8BB2-5A2D5B8FE593"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OC-JS-WKWebView/SMWKWebViewController/SMWKWebViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "-webView:didFinishNavigation:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

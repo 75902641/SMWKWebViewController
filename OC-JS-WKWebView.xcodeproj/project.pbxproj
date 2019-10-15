@@ -21,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		67A9FBD923555CBE00C2D480 /* pushAndPop动画.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "pushAndPop动画.entitlements"; sourceTree = "<group>"; };
 		67F7AD4B235410320072031F /* File.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = File.html; sourceTree = "<group>"; };
 		67F7AD4E2354381B0072031F /* SMWKWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMWKWebViewController.h; sourceTree = "<group>"; };
 		67F7AD4F2354381B0072031F /* SMWKWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMWKWebViewController.m; sourceTree = "<group>"; };
@@ -90,6 +91,7 @@
 		67FF74D923540C3D0022B1D4 /* OC-JS-WKWebView */ = {
 			isa = PBXGroup;
 			children = (
+				67A9FBD923555CBE00C2D480 /* pushAndPop动画.entitlements */,
 				70770A6A2354BA58006673CA /* BulletBox */,
 				70770A692354AA0B006673CA /* navigationController */,
 				67F7AD4D235437EF0072031F /* SMWKWebViewController */,
@@ -341,6 +343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "OC-JS-WKWebView/pushAndPop动画.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QUGGFYN36P;
 				INFOPLIST_FILE = "OC-JS-WKWebView/Info.plist";
@@ -358,6 +361,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "OC-JS-WKWebView/pushAndPop动画.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QUGGFYN36P;
 				INFOPLIST_FILE = "OC-JS-WKWebView/Info.plist";

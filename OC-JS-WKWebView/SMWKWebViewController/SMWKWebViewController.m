@@ -11,7 +11,10 @@
 #import <WebKit/WebKit.h>
 #import "AppDelegate.h"
 
-@interface SMWKWebViewController ()<WKScriptMessageHandler, WKNavigationDelegate>
+@interface SMWKWebViewController ()<WKScriptMessageHandler, WKNavigationDelegate>{
+    
+    BOOL deviceTokenBool;
+}
 
 @property (nonatomic, strong) WKWebView *wkWebView;
 @property (nonatomic, strong) UIProgressView * progressView;
@@ -23,6 +26,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"pushViewController"];//注入h5调取oc的方法
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"getDeviceToken"];//注入h5调取oc的方法
+
     
     
     
@@ -31,7 +36,8 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"pushViewController"];//取消h5调取oc的方法
-    
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"getDeviceToken"];//取消h5调取oc的方法
+
     
     
 }
@@ -48,27 +54,27 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-     
+    
     SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
     if (navigation.viewControllers.count == 1) {
         
         self.navigationItem.hidesBackButton = YES;
-
+        
         
     }else{
         
         //返回按钮
-           UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-           rightBtn.frame = CGRectMake(0, 2, 40, 26);
-           rightBtn.backgroundColor = [UIColor clearColor];
-           [rightBtn addTarget:self action:@selector(pressBackButton:) forControlEvents:UIControlEventTouchUpInside];
-           [rightBtn setImage:[UIImage imageNamed:@"arrow_left_back"] forState:UIControlStateNormal];
-           UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-           self.navigationItem.leftBarButtonItem = barIten;
+        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightBtn.frame = CGRectMake(0, 2, 40, 26);
+        rightBtn.backgroundColor = [UIColor clearColor];
+        [rightBtn addTarget:self action:@selector(pressBackButton:) forControlEvents:UIControlEventTouchUpInside];
+        [rightBtn setImage:[UIImage imageNamed:@"arrow_left_back"] forState:UIControlStateNormal];
+        UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+        self.navigationItem.leftBarButtonItem = barIten;
         
     }
     
-   
+    
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     self.wkWebView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
@@ -79,23 +85,23 @@
     if (!self.urlString || self.urlString.length == 0) {
         
         [self alertFunc];
-
-//        NSString *path = [[NSBundle mainBundle] bundlePath];
-//              NSURL *baseURL = [NSURL fileURLWithPath:path];
-//              NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
-//
-//
-//              NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
-//                                                             encoding:NSUTF8StringEncoding
-//                                                                error:nil];
-//              [self.wkWebView loadHTMLString:htmlCont baseURL:baseURL];
+        
+        //        NSString *path = [[NSBundle mainBundle] bundlePath];
+        //              NSURL *baseURL = [NSURL fileURLWithPath:path];
+        //              NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
+        //
+        //
+        //              NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
+        //                                                             encoding:NSUTF8StringEncoding
+        //                                                                error:nil];
+        //              [self.wkWebView loadHTMLString:htmlCont baseURL:baseURL];
     }else{
         
         [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
-
+        
     }
     
-   
+    
     
     CGFloat progressBarHeight = 3.f;
     CGRect barFrame = CGRectMake(0, 44 + [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, progressBarHeight);
@@ -155,13 +161,26 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:( WKNavigation *)navigation
 {
     NSLog(@"页面加载完成时5");
-    CGFloat width = [[UIScreen mainScreen] bounds].size.width;
-    CGFloat height = [[UIScreen mainScreen] bounds].size.height;
-    NSString * funcStr = [NSString stringWithFormat:@"widthAndHeight(%f,%f)", width, height];
-    [self.wkWebView evaluateJavaScript:funcStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
-        //TODO
-        NSLog(@"%@ %@",response,error);
-    }];
+    if (deviceTokenBool) {
+         NSString * deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+              
+        
+        NSString *jsonString = nil;
+          NSError *parseError = nil;
+          NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{@"deviceToken":deviceToken} options:NSJSONWritingPrettyPrinted error:&parseError];
+          jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+          
+
+          
+        
+        NSString * funcStr = [NSString stringWithFormat:@"getDeviceTokenFunc('%@')", deviceToken];
+              [self.wkWebView evaluateJavaScript:funcStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                  //TODO
+                  NSLog(@"%@ %@",response,error);
+              }];
+        deviceTokenBool = NO;
+    }
+   
     
 }
 
@@ -184,7 +203,7 @@
     
     NSLog(@"url =========== %@", navigationAction.request.URL);
     
-//    NSString * strRequest = [NSString stringWithFormat:@"%@", navigationAction.request.URL];
+    //    NSString * strRequest = [NSString stringWithFormat:@"%@", navigationAction.request.URL];
     
     NSString *scheme = [navigationAction.request.URL scheme];
     
@@ -203,29 +222,29 @@
     }
     
     
-//    if ([strRequest isEqualToString:self.urlString]) {
-//        decisionHandler(WKNavigationActionPolicyAllow);
-//        return;
-//    }
-//
-//    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strRequest]]) {
-//        SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
-//           webViewController.urlString = strRequest;
-//           [self.navigationController pushViewController:webViewController animated:YES];
-//        decisionHandler(WKNavigationActionPolicyCancel);
-//        return;
-//    }
+    //    if ([strRequest isEqualToString:self.urlString]) {
+    //        decisionHandler(WKNavigationActionPolicyAllow);
+    //        return;
+    //    }
+    //
+    //    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strRequest]]) {
+    //        SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+    //           webViewController.urlString = strRequest;
+    //           [self.navigationController pushViewController:webViewController animated:YES];
+    //        decisionHandler(WKNavigationActionPolicyCancel);
+    //        return;
+    //    }
     
     
-   
+    
     
     
     
     //允许跳转
-        decisionHandler(WKNavigationActionPolicyAllow);
+    decisionHandler(WKNavigationActionPolicyAllow);
     
     //不允许跳转
-//    decisionHandler(WKNavigationActionPolicyCancel);
+    //    decisionHandler(WKNavigationActionPolicyCancel);
     NSLog(@"在请求发送之前，决定是否跳转 1");
 }
 
@@ -260,16 +279,20 @@
     
     if ([message.name isEqualToString:@"pushViewController"]) {//js调取OC的函数
         
-//        NSArray *array = message.body;
+        //        NSArray *array = message.body;
         NSString * urlString = message.body;
         [self pushViewController:urlString];
         
+    }
+    if ([message.name isEqualToString:@"getDeviceToken"]) {
+        NSString * sender = message.body;
+        [self getDeviceToken:sender];
     }
     
     
 }
 
-#pragma mark - UI控件的调用
+#pragma mark - js的调用
 
 
 
@@ -284,37 +307,60 @@
 - (void)popViewController:(NSString *)sender{
     
     [self.navigationController popViewControllerAnimated:YES];
-
+    
 }
+
+- (void)getDeviceToken:(NSString *)sender{
+    
+   
+    deviceTokenBool = YES;
+}
+
+
+
+
 
 - (void)alertFunc{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请输入网址" preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-
-           UITextField* userNameTextField = alertController.textFields.firstObject;
-
-           NSLog(@"网址：%@",userNameTextField.text);
-            
-        self.urlString = userNameTextField.text;
-                    [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
-
         
-
-       }]];
+        UITextField* userNameTextField = alertController.textFields.firstObject;
+        
+        NSLog(@"网址：%@",userNameTextField.text);
+        
+        if (userNameTextField.text.length == 0) {
+            NSString *path = [[NSBundle mainBundle] bundlePath];
+            NSURL *baseURL = [NSURL fileURLWithPath:path];
+            NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
+            
+            
+            NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
+                                                           encoding:NSUTF8StringEncoding
+                                                              error:nil];
+            [self.wkWebView loadHTMLString:htmlCont baseURL:baseURL];
+        }else{
+            self.urlString = userNameTextField.text;
+            [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
+        }
+        
+        
+        
+        
+    }]];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField*_Nonnull textField) {
-
-           textField.placeholder=@"请输入网址";
-
-
-       }];
+        
+        textField.placeholder=@"请输入网址";
+        
+        
+    }];
     
     [self presentViewController:alertController animated:YES completion:nil];
-
-
+    
+    
 }
 
 

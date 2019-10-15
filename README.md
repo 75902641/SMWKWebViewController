@@ -7,6 +7,9 @@
 
 
 
+
+
+
 Give H5 an app shell, wrap WKWebView, and have a push animation just like the next page. Click to return to have a pop animation, compatible with web calls, js and oc call each other, message push.
 
 Package a shell for h5. For the first time, there will be a popup window. Enter the h5 address to be displayed. In your own h5 page, you can call the pushViewController method. If you pass the string type URL, you can push the animation to the next page. Click to return. You can return to the previous page. Then improve the shell of h5, h5's small partners can use this app to achieve ios development. H5 calls the ios method window.webkit.messageHandlers.pushViewController.postMessage("https://www.xxxxx.com"); The program contains the File.html demo to call.

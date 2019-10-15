@@ -92,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				67A9FBD923555CBE00C2D480 /* pushAndPop动画.entitlements */,
-				70770A6A2354BA58006673CA /* BulletBox */,
 				70770A692354AA0B006673CA /* navigationController */,
 				67F7AD4D235437EF0072031F /* SMWKWebViewController */,
 				67FF74DA23540C3D0022B1D4 /* AppDelegate.h */,
@@ -117,13 +116,6 @@
 				67F7AD5223543A820072031F /* SMNavigationController.m */,
 			);
 			path = navigationController;
-			sourceTree = "<group>";
-		};
-		70770A6A2354BA58006673CA /* BulletBox */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BulletBox;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

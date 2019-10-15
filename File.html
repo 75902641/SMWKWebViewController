@@ -10,6 +10,11 @@
                 width: 200px;
                 height: 200px;
             }
+        #pTitle{
+            width: 400px;
+            height: 200px;
+            background-color:red;
+        }
         </style>
         
         
@@ -19,7 +24,7 @@
         
         <input id="buttonId" type="button" value="按钮"  onclick="sck()">
             
-            
+       <p id="pTitle">11111</p>
             
             
             <script type="text/javascript">
@@ -30,6 +35,16 @@
                 }
             
             
+                window.webkit.messageHandlers.getDeviceToken.postMessage("");//去客户端拿deviceToken从下面的方法返回得到
+                function getDeviceTokenFunc(d) {//deviceToken获取deviceToken
+                           
+                           //保存deiceToken给服务器推送就可以
+                        //var p =  document.getElementById('pTitle');
+                        //P.text = deviceToken;
+                        var x = document.getElementById("pTitle");
+                        x.innerHTML = d;
+                      
+                }
             
             
             

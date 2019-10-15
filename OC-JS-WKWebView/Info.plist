@@ -79,5 +79,10 @@
 	<string>需要使用麦克风录音，方便服务人员提供服务</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>需要使用媒体资料库上传资料，方便服务人员提供服务</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

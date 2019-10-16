@@ -9,6 +9,8 @@
 
 增加选择默认加载还是pushViewController动画加载。（可以用默认的js来控制pushViewController，也可以在弹框上选择pushViewController动画）
 
+增加选择默认加载还是presentViewController动画加载。（可以用默认的js来控制presentViewController，也可以在弹框上选择presentViewController动画）
+
 
 
 
@@ -22,3 +24,5 @@ Add push, js get ios deviceToken, the server can push the app according to devic
 Add camera, Bluetooth, contacts, location, microphone, media library access
 
 Increase the selection of the default load or the pushViewController animation load. (You can use the default js to control the pushViewController, or you can select the pushViewController animation on the bullet box.)
+
+Increase the selection of the default load or the presentViewController animation load. (You can use the default js to control the presentViewController, or you can select the presentViewController animation on the bullet box.)

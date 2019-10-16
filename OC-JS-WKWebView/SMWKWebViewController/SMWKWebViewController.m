@@ -394,6 +394,21 @@
     
 }
 
+- (void)presentViewController:(NSString *)url{
+    
+    SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+    webViewController.urlString = url;
+    SMNavigationController * navition = [[SMNavigationController alloc] initWithRootViewController:webViewController];
+    navition.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:navition animated:YES completion:nil];
+    
+}
+
+- (void)dismissViewController:(NSString *)sender{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)getDeviceToken:(NSString *)sender{
     
     deviceTokenBool = YES;

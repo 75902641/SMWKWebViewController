@@ -64,7 +64,13 @@
         }
         
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    if (self.showType == presentViewControllerType) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    if (self.showType == pushViewControllerType) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 

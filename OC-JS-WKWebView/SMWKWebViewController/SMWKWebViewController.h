@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+
+    defaultType,
+    pushViewControllerType,
+    presentViewControllerType,
+    
+}ControllerShowType;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SMWKWebViewController : UIViewController
 @property (nonatomic, copy)NSString * urlString;
+@property (nonatomic, assign) ControllerShowType showType;
 
 @end
 

@@ -299,7 +299,11 @@
             SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
             webViewController.urlString = strRequest;
             webViewController.showType = self.showType;
-            [self.navigationController pushViewController:webViewController animated:YES];
+            SMNavigationController * navition = [[SMNavigationController alloc] initWithRootViewController:webViewController];
+            navition.modalPresentationStyle = UIModalPresentationFullScreen;
+            
+            [self presentViewController:navition animated:YES completion:nil];
+            
             decisionHandler(WKNavigationActionPolicyCancel);
             
             return;

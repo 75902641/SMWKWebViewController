@@ -97,6 +97,10 @@
     
     [self leftBarButtonItemFunc];
     self->leftButton.hidden = YES;
+    if (self.showType == presentViewControllerType) {
+    self->leftButton.hidden = NO;
+
+    }
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     self.wkWebView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
@@ -285,7 +289,22 @@
             return;
         }
     }
-    
+    if (self.showType == presentViewControllerType) {
+        if ([strRequest isEqualToString:self.urlString]) {
+            decisionHandler(WKNavigationActionPolicyAllow);
+            return;
+        }
+        
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strRequest]]) {
+            SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+            webViewController.urlString = strRequest;
+            webViewController.showType = self.showType;
+            [self.navigationController pushViewController:webViewController animated:YES];
+            decisionHandler(WKNavigationActionPolicyCancel);
+            
+            return;
+        }
+    }
     
     
     
@@ -393,6 +412,14 @@
             self->leftButton.hidden = YES;
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"present" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField* userNameTextField = alertController.textFields.firstObject;
+        self.urlString = userNameTextField.text;
+        [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
+        self.showType = presentViewControllerType;
+        self->leftButton.hidden = YES;
+    }]];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"push" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField* userNameTextField = alertController.textFields.firstObject;

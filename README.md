@@ -7,6 +7,8 @@
 
 增加相机、蓝牙、通讯录、定位、麦克风、媒体库访问权限
 
+增加选择默认加载还是pushViewController动画加载。（可以用默认的js来控制pushViewController，也可以在弹框上选择pushViewController动画）
+
 
 
 
@@ -18,3 +20,5 @@ Package a shell for h5. For the first time, there will be a popup window. Enter 
 Add push, js get ios deviceToken, the server can push the app according to deviceToken
 
 Add camera, Bluetooth, contacts, location, microphone, media library access
+
+Increase the selection of the default load or the pushViewController animation load. (You can use the default js to control the pushViewController, or you can select the pushViewController animation on the bullet box.)

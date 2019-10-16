@@ -14,6 +14,7 @@
 @interface SMWKWebViewController ()<WKScriptMessageHandler, WKNavigationDelegate>{
     
     BOOL deviceTokenBool;
+    UIButton *leftButton;
 }
 
 @property (nonatomic, strong) WKWebView *wkWebView;
@@ -27,7 +28,16 @@
     [super viewWillAppear:animated];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"pushViewController"];//注入h5调取oc的方法
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"getDeviceToken"];//注入h5调取oc的方法
-
+    
+    if (self.showType == pushViewControllerType) {
+        SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
+        if (navigation.viewControllers.count == 1 ) {
+            self->leftButton.hidden = YES;
+        }else{
+            self->leftButton.hidden = NO;
+        }
+    }
+    
     
     
     
@@ -37,13 +47,23 @@
     [super viewWillDisappear:animated];
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"pushViewController"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"getDeviceToken"];//取消h5调取oc的方法
-
+    
     
     
 }
 
 - (void)pressBackButton:(UIButton *)sender{
     
+    if (self.showType == defaultType) {
+        
+        if ([self.wkWebView canGoBack]) {
+            [self.wkWebView goBack];
+        }else{
+            self->leftButton.hidden = YES;
+            
+        }
+        
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -55,26 +75,28 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
-    if (navigation.viewControllers.count == 1) {
-        
-        self.navigationItem.hidesBackButton = YES;
-        
-        
-    }else{
-        
-        //返回按钮
-        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightBtn.frame = CGRectMake(0, 2, 40, 26);
-        rightBtn.backgroundColor = [UIColor clearColor];
-        [rightBtn addTarget:self action:@selector(pressBackButton:) forControlEvents:UIControlEventTouchUpInside];
-        [rightBtn setImage:[UIImage imageNamed:@"arrow_left_back"] forState:UIControlStateNormal];
-        UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-        self.navigationItem.leftBarButtonItem = barIten;
-        
-    }
+    //    SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
+    //    if (navigation.viewControllers.count == 1 ) {
+    //
+    //        self.navigationItem.hidesBackButton = YES;
+    //
+    //
+    //    }else{
+    //
+    //        //返回按钮
+    //            UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //            rightBtn.frame = CGRectMake(0, 2, 40, 26);
+    //            rightBtn.backgroundColor = [UIColor clearColor];
+    //            [rightBtn addTarget:self action:@selector(pressBackButton:) forControlEvents:UIControlEventTouchUpInside];
+    //            [rightBtn setImage:[UIImage imageNamed:@"arrow_left_back"] forState:UIControlStateNormal];
+    //            UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    //            self.navigationItem.leftBarButtonItem = barIten;
+    //
+    //    }
     
     
+    [self leftBarButtonItemFunc];
+    self->leftButton.hidden = YES;
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     self.wkWebView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
@@ -116,6 +138,19 @@
                         options:NSKeyValueObservingOptionNew
                         context:nil];
     
+    
+}
+
+- (void)leftBarButtonItemFunc{
+    
+    
+    leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 2, 40, 26);
+    leftButton.backgroundColor = [UIColor clearColor];
+    [leftButton addTarget:self action:@selector(pressBackButton:) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton setImage:[UIImage imageNamed:@"arrow_left_back"] forState:UIControlStateNormal];
+    UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = barIten;
     
 }
 
@@ -161,26 +196,37 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:( WKNavigation *)navigation
 {
     NSLog(@"页面加载完成时5");
+    
+    
+    if (self.showType == defaultType) {
+        if ([self.wkWebView canGoBack]) {
+            self->leftButton.hidden = NO;
+        }else{
+            self->leftButton.hidden = YES;
+        }
+        
+    }
+    
     if (deviceTokenBool) {
-         NSString * deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
-              
+        NSString * deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+        
         
         NSString *jsonString = nil;
-          NSError *parseError = nil;
-          NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{@"deviceToken":deviceToken} options:NSJSONWritingPrettyPrinted error:&parseError];
-          jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-          
-
-          
+        NSError *parseError = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{@"deviceToken":deviceToken} options:NSJSONWritingPrettyPrinted error:&parseError];
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+        
+        
         
         NSString * funcStr = [NSString stringWithFormat:@"getDeviceTokenFunc('%@')", deviceToken];
-              [self.wkWebView evaluateJavaScript:funcStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
-                  //TODO
-                  NSLog(@"%@ %@",response,error);
-              }];
+        [self.wkWebView evaluateJavaScript:funcStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+            //TODO
+            NSLog(@"%@ %@",response,error);
+        }];
         deviceTokenBool = NO;
     }
-   
+    
     
 }
 
@@ -203,7 +249,8 @@
     
     NSLog(@"url =========== %@", navigationAction.request.URL);
     
-    //    NSString * strRequest = [NSString stringWithFormat:@"%@", navigationAction.request.URL];
+    
+    NSString * strRequest = [NSString stringWithFormat:@"%@", navigationAction.request.URL];
     
     NSString *scheme = [navigationAction.request.URL scheme];
     
@@ -222,18 +269,24 @@
     }
     
     
-    //    if ([strRequest isEqualToString:self.urlString]) {
-    //        decisionHandler(WKNavigationActionPolicyAllow);
-    //        return;
-    //    }
-    //
-    //    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strRequest]]) {
-    //        SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
-    //           webViewController.urlString = strRequest;
-    //           [self.navigationController pushViewController:webViewController animated:YES];
-    //        decisionHandler(WKNavigationActionPolicyCancel);
-    //        return;
-    //    }
+    if (self.showType == pushViewControllerType) {
+        if ([strRequest isEqualToString:self.urlString]) {
+            decisionHandler(WKNavigationActionPolicyAllow);
+            return;
+        }
+        
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strRequest]]) {
+            SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+            webViewController.urlString = strRequest;
+            webViewController.showType = self.showType;
+            [self.navigationController pushViewController:webViewController animated:YES];
+            decisionHandler(WKNavigationActionPolicyCancel);
+            
+            return;
+        }
+    }
+    
+    
     
     
     
@@ -242,6 +295,8 @@
     
     //允许跳转
     decisionHandler(WKNavigationActionPolicyAllow);
+    
+   
     
     //不允许跳转
     //    decisionHandler(WKNavigationActionPolicyCancel);
@@ -312,7 +367,7 @@
 
 - (void)getDeviceToken:(NSString *)sender{
     
-   
+    
     deviceTokenBool = YES;
 }
 
@@ -324,8 +379,18 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请输入网址" preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:@"默认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField* userNameTextField = alertController.textFields.firstObject;
+        self.urlString = userNameTextField.text;
+        [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
+        self.showType = defaultType;
+        if ([self.wkWebView canGoBack]) {
+            self->leftButton.hidden = NO;
+        }else{
+            self->leftButton.hidden = YES;
+        }
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"push" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField* userNameTextField = alertController.textFields.firstObject;
         
@@ -345,11 +410,19 @@
             self.urlString = userNameTextField.text;
             [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
         }
-        
+        self.showType = pushViewControllerType;
+        SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
+        if (navigation.viewControllers.count == 1 ) {
+            self->leftButton.hidden = YES;
+        }else{
+            self->leftButton.hidden = NO;
+        }
         
         
         
     }]];
+    
+    
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField*_Nonnull textField) {
         

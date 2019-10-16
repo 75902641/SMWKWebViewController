@@ -367,14 +367,17 @@
 
 - (void)getDeviceToken:(NSString *)sender{
     
-    
     deviceTokenBool = YES;
+    
 }
 
 
 
 
 
+
+
+#pragma mark - 弹窗
 - (void)alertFunc{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请输入网址" preferredStyle:UIAlertControllerStyleAlert];
     

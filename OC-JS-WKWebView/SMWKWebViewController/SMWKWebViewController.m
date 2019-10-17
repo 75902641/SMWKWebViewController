@@ -37,19 +37,14 @@
             self->leftButton.hidden = NO;
         }
     }
-    
-    
-    
-    
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"pushViewController"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"getDeviceToken"];//取消h5调取oc的方法
-    
-    
-    
+
 }
 
 - (void)pressBackButton:(UIButton *)sender{
@@ -81,31 +76,10 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    //    SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
-    //    if (navigation.viewControllers.count == 1 ) {
-    //
-    //        self.navigationItem.hidesBackButton = YES;
-    //
-    //
-    //    }else{
-    //
-    //        //返回按钮
-    //            UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    //            rightBtn.frame = CGRectMake(0, 2, 40, 26);
-    //            rightBtn.backgroundColor = [UIColor clearColor];
-    //            [rightBtn addTarget:self action:@selector(pressBackButton:) forControlEvents:UIControlEventTouchUpInside];
-    //            [rightBtn setImage:[UIImage imageNamed:@"arrow_left_back"] forState:UIControlStateNormal];
-    //            UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    //            self.navigationItem.leftBarButtonItem = barIten;
-    //
-    //    }
-    
-    
     [self leftBarButtonItemFunc];
     self->leftButton.hidden = YES;
     if (self.showType == presentViewControllerType) {
     self->leftButton.hidden = NO;
-
     }
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
@@ -118,22 +92,11 @@
         
         [self alertFunc];
         
-        //        NSString *path = [[NSBundle mainBundle] bundlePath];
-        //              NSURL *baseURL = [NSURL fileURLWithPath:path];
-        //              NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
-        //
-        //
-        //              NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
-        //                                                             encoding:NSUTF8StringEncoding
-        //                                                                error:nil];
-        //              [self.wkWebView loadHTMLString:htmlCont baseURL:baseURL];
     }else{
         
         [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
         
     }
-    
-    
     
     CGFloat progressBarHeight = 3.f;
     CGRect barFrame = CGRectMake(0, 44 + [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, progressBarHeight);
@@ -147,7 +110,6 @@
                      forKeyPath:@"title"
                         options:NSKeyValueObservingOptionNew
                         context:nil];
-    
     
 }
 
@@ -315,12 +277,7 @@
             return;
         }
     }
-    
-    
-    
-    
-    
-    
+
     
     //允许跳转
     decisionHandler(WKNavigationActionPolicyAllow);
@@ -414,12 +371,6 @@
     deviceTokenBool = YES;
     
 }
-
-
-
-
-
-
 
 #pragma mark - 弹窗
 - (void)alertFunc{

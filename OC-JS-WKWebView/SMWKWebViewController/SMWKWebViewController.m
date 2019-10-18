@@ -68,6 +68,15 @@
     }
 }
 
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    self.wkWebView.frame = CGRectMake(0, 0, self.allView.frame.size.width, self.allView.frame.size.height);
+   
+    CGFloat progressBarHeight = 3.f;
+    CGRect barFrame = CGRectMake(0, 0, self.allView.frame.size.width, progressBarHeight);
+    self.progressView.frame = barFrame;
+    
+}
 
 - (void)viewDidLoad {
     
@@ -83,10 +92,10 @@
     }
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-    self.wkWebView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
+    self.wkWebView = [[WKWebView alloc] initWithFrame:self.allView.bounds configuration:config];
     self.wkWebView.UIDelegate = self;
     self.wkWebView.navigationDelegate = self;
-    [self.view addSubview:self.wkWebView];
+    [self.allView addSubview:self.wkWebView];
     
     if (!self.urlString || self.urlString.length == 0) {
         
@@ -99,11 +108,11 @@
     }
     
     CGFloat progressBarHeight = 3.f;
-    CGRect barFrame = CGRectMake(0, 44 + [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, progressBarHeight);
+    CGRect barFrame = CGRectMake(0, 0, self.view.frame.size.width, progressBarHeight);
     self.progressView = [[UIProgressView alloc]initWithFrame:barFrame];
     self.progressView.progressTintColor = [UIColor colorWithRed:0/255.0 green:159/255.0 blue:255/255.0 alpha:1];
     self.progressView.trackTintColor = [UIColor clearColor];
-    [self.view addSubview:self.progressView];
+    [self.allView addSubview:self.progressView];
     
     [self.wkWebView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:nil];
     [self.wkWebView addObserver:self
@@ -248,7 +257,9 @@
         }
         
         if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strRequest]]) {
-            SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            SMWKWebViewController * webViewController = [storyboard instantiateViewControllerWithIdentifier:@"SMWKWebViewController"];
             webViewController.urlString = strRequest;
             webViewController.showType = self.showType;
             [self.navigationController pushViewController:webViewController animated:YES];
@@ -264,7 +275,10 @@
         }
         
         if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:strRequest]]) {
-            SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+
+
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                       SMWKWebViewController * webViewController = [storyboard instantiateViewControllerWithIdentifier:@"SMWKWebViewController"];
             webViewController.urlString = strRequest;
             webViewController.showType = self.showType;
             SMNavigationController * navition = [[SMNavigationController alloc] initWithRootViewController:webViewController];
@@ -340,7 +354,8 @@
 //oc函数具体的实现
 - (void)pushViewController:(NSString *)url{
     
-    SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+               SMWKWebViewController * webViewController = [storyboard instantiateViewControllerWithIdentifier:@"SMWKWebViewController"];
     webViewController.urlString = url;
     [self.navigationController pushViewController:webViewController animated:YES];
 }
@@ -353,7 +368,8 @@
 
 - (void)presentViewController:(NSString *)url{
     
-    SMWKWebViewController * webViewController = [[SMWKWebViewController alloc] init];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+               SMWKWebViewController * webViewController = [storyboard instantiateViewControllerWithIdentifier:@"SMWKWebViewController"];
     webViewController.urlString = url;
     SMNavigationController * navition = [[SMNavigationController alloc] initWithRootViewController:webViewController];
     navition.modalPresentationStyle = UIModalPresentationFullScreen;

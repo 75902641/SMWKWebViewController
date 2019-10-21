@@ -15,6 +15,7 @@
     
     BOOL deviceTokenBool;
     UIButton *leftButton;
+    UIButton *rightButton;
 }
 
 @property (nonatomic, strong) WKWebView *wkWebView;
@@ -28,6 +29,8 @@
     [super viewWillAppear:animated];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"pushViewController"];//注入h5调取oc的方法
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"getDeviceToken"];//注入h5调取oc的方法
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"rightBarButtonItemWithTitle"];
+    
     
     if (self.showType == pushViewControllerType) {
         SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
@@ -44,6 +47,7 @@
     [super viewWillDisappear:animated];
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"pushViewController"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"getDeviceToken"];//取消h5调取oc的方法
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"rightBarButtonItemWithTitle"];//取消h5调取oc的方法
 
 }
 
@@ -133,6 +137,32 @@
     UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = barIten;
     
+}
+
+- (void)rightBarButtonItemWithTitle:(NSString *)title{
+    
+    
+    rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(0, 2, 40, 26);
+    rightButton.backgroundColor = [UIColor clearColor];
+    [rightButton addTarget:self action:@selector(pressRightButton:) forControlEvents:UIControlEventTouchUpInside];
+    if (title) {
+        [rightButton setTitle:title forState:UIControlStateNormal];
+    }
+//    [rightButton setImage:[UIImage imageNamed:@"arrow_left_back"] forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    UIBarButtonItem *barIten = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = barIten;
+    
+}
+
+- (void)pressRightButton:(UIButton *)sender{
+    
+    [self.wkWebView evaluateJavaScript:@"pressRightButton()" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+               //TODO
+               NSLog(@"%@ %@",response,error);
+           }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
@@ -342,6 +372,10 @@
     if ([message.name isEqualToString:@"getDeviceToken"]) {
         NSString * sender = message.body;
         [self getDeviceToken:sender];
+    }
+    if ([message.name isEqualToString:@"rightBarButtonItemWithTitle"]) {
+        NSString * sender = message.body;
+        [self rightBarButtonItemWithTitle:sender];
     }
     
     

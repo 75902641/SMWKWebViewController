@@ -10,6 +10,7 @@
 #import "SMNavigationController.h"
 #import <WebKit/WebKit.h>
 #import "AppDelegate.h"
+#import "CMLoginViewController.h"
 
 @interface SMWKWebViewController ()<WKScriptMessageHandler, WKNavigationDelegate>{
     
@@ -30,8 +31,8 @@
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"pushViewController"];//注入h5调取oc的方法
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"getDeviceToken"];//注入h5调取oc的方法
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"rightBarButtonItemWithTitle"];
-    
-    
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"loginViewControllerFunc"];
+
     if (self.showType == pushViewControllerType) {
         SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
         if (navigation.viewControllers.count == 1 ) {
@@ -48,6 +49,7 @@
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"pushViewController"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"getDeviceToken"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"rightBarButtonItemWithTitle"];//取消h5调取oc的方法
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"loginViewControllerFunc"];//取消h5调取oc的方法
 
 }
 
@@ -377,6 +379,10 @@
         NSString * sender = message.body;
         [self rightBarButtonItemWithTitle:sender];
     }
+    if ([message.name isEqualToString:@"loginViewControllerFunc"]) {
+        NSString * sender = message.body;
+        [self loginViewControllerFunc:sender];
+    }
     
     
 }
@@ -419,6 +425,14 @@
 - (void)getDeviceToken:(NSString *)sender{
     
     deviceTokenBool = YES;
+    
+}
+
+- (void)loginViewControllerFunc:(NSString *)sender{
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CMLogin" bundle:nil];
+    CMLoginViewController * loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"CMLoginViewController"];
+    [self.navigationController pushViewController:loginViewController animated:YES];
     
 }
 

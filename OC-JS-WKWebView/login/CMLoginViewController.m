@@ -69,9 +69,11 @@
     
     if (![self isPhoneNumberJudgment])
     {
+        
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提醒" message:@"请输入正确的手机号" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
 
-        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"请输入正确的手机号" delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
-        [alert show];
         return;
     }
     

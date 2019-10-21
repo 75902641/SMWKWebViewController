@@ -25,7 +25,7 @@
         <input id="buttonId" type="button" value="按钮"  onclick="sck()">
             <input type="file" name="cover" accept="image/*" capture="camera"/>
        <p id="pTitle">11111</p>
-            
+
             
             <script type="text/javascript">
                 
@@ -45,7 +45,13 @@
                 }
             
             
-            
+                window.webkit.messageHandlers.rightBarButtonItemWithTitle.postMessage("h5按钮");
+                function pressRightButton() {
+                           
+                        var x = document.getElementById("pTitle");
+                        x.innerHTML = "点了右按钮";
+                      
+                }
             
             
                 </script>

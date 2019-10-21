@@ -11,6 +11,8 @@
 
 增加选择默认加载还是presentViewController动画加载。（可以用默认的js来控制presentViewController，也可以在弹框上选择presentViewController动画）
 
+增加h5添加导航右边的按钮，程序内附有File.html怎样调用
+
 打开程序，什么都不填，点击push，可以看到本地html加载的内容和交互效果
 
 
@@ -26,5 +28,7 @@ Add camera, Bluetooth, contacts, location, microphone, media library access
 Increase the selection of the default load or the pushViewController animation load. (You can use the default js to control the pushViewController, or you can select the pushViewController animation on the bullet box.)
 
 Increase the selection of the default load or the presentViewController animation load. (You can use the default js to control the presentViewController, or you can select the presentViewController animation on the bullet box.)
+
+Add h5 to add the button to the right of the navigation, the program is attached with File.html how to call
 
 Open the program, do not fill in anything, click push, you can see the content and interaction effect of the local html loading

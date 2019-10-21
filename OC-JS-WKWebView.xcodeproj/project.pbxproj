@@ -18,6 +18,10 @@
 		67FF74E723540C3F0022B1D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67FF74E623540C3F0022B1D4 /* Assets.xcassets */; };
 		67FF74EA23540C3F0022B1D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67FF74E823540C3F0022B1D4 /* LaunchScreen.storyboard */; };
 		67FF74ED23540C3F0022B1D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF74EC23540C3F0022B1D4 /* main.m */; };
+		BFE5EB25235D78C3003C6672 /* CMLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFE5EB24235D78C3003C6672 /* CMLogin.storyboard */; };
+		BFE5EB28235D78D8003C6672 /* CMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE5EB27235D78D8003C6672 /* CMLoginViewController.m */; };
+		BFE5EB2C235D7C0A003C6672 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE5EB2B235D7C0A003C6672 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		BFE5EB30235D85D6003C6672 /* CGHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE5EB2E235D85D6003C6672 /* CGHttpClient.m */; };
 		F9913B8E2B0EB43865DDC8BA /* libPods-OC-JS-WKWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BECD06E7FB8CA873355CF8 /* libPods-OC-JS-WKWebView.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +48,13 @@
 		67FF74EC23540C3F0022B1D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		91BECD06E7FB8CA873355CF8 /* libPods-OC-JS-WKWebView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OC-JS-WKWebView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD1FAC72602FAE9B755D9BF8 /* Pods-OC-JS-WKWebView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OC-JS-WKWebView.release.xcconfig"; path = "Target Support Files/Pods-OC-JS-WKWebView/Pods-OC-JS-WKWebView.release.xcconfig"; sourceTree = "<group>"; };
+		BFE5EB24235D78C3003C6672 /* CMLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CMLogin.storyboard; sourceTree = "<group>"; };
+		BFE5EB26235D78D8003C6672 /* CMLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CMLoginViewController.h; sourceTree = "<group>"; };
+		BFE5EB27235D78D8003C6672 /* CMLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CMLoginViewController.m; sourceTree = "<group>"; };
+		BFE5EB2A235D7C0A003C6672 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		BFE5EB2B235D7C0A003C6672 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		BFE5EB2E235D85D6003C6672 /* CGHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGHttpClient.m; sourceTree = "<group>"; };
+		BFE5EB2F235D85D6003C6672 /* CGHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGHttpClient.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,9 +117,12 @@
 		67FF74D923540C3D0022B1D4 /* OC-JS-WKWebView */ = {
 			isa = PBXGroup;
 			children = (
+				BFE5EB2D235D85AF003C6672 /* network */,
+				BFE5EB29235D7C01003C6672 /* Utility */,
 				67A9FBD923555CBE00C2D480 /* pushAndPop动画.entitlements */,
 				70770A692354AA0B006673CA /* navigationController */,
 				67F7AD4D235437EF0072031F /* SMWKWebViewController */,
+				BFE5EB23235D7887003C6672 /* login */,
 				67FF74DA23540C3D0022B1D4 /* AppDelegate.h */,
 				67FF74DB23540C3D0022B1D4 /* AppDelegate.m */,
 				67FF74DD23540C3D0022B1D4 /* SceneDelegate.h */,
@@ -139,8 +153,35 @@
 				1D1B6E27DBE6A40163F0343E /* Pods-OC-JS-WKWebView.debug.xcconfig */,
 				BD1FAC72602FAE9B755D9BF8 /* Pods-OC-JS-WKWebView.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BFE5EB23235D7887003C6672 /* login */ = {
+			isa = PBXGroup;
+			children = (
+				BFE5EB24235D78C3003C6672 /* CMLogin.storyboard */,
+				BFE5EB26235D78D8003C6672 /* CMLoginViewController.h */,
+				BFE5EB27235D78D8003C6672 /* CMLoginViewController.m */,
+			);
+			path = login;
+			sourceTree = "<group>";
+		};
+		BFE5EB29235D7C01003C6672 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				BFE5EB2A235D7C0A003C6672 /* RegexKitLite.h */,
+				BFE5EB2B235D7C0A003C6672 /* RegexKitLite.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		BFE5EB2D235D85AF003C6672 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				BFE5EB2F235D85D6003C6672 /* CGHttpClient.h */,
+				BFE5EB2E235D85D6003C6672 /* CGHttpClient.m */,
+			);
+			path = network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,6 +244,7 @@
 			files = (
 				67F7AD4C235410320072031F /* File.html in Resources */,
 				67FF74EA23540C3F0022B1D4 /* LaunchScreen.storyboard in Resources */,
+				BFE5EB25235D78C3003C6672 /* CMLogin.storyboard in Resources */,
 				67FF74E723540C3F0022B1D4 /* Assets.xcassets in Resources */,
 				67F7AD5623543E360072031F /* arrow_left_back@2x.png in Resources */,
 				67FF74E523540C3D0022B1D4 /* Main.storyboard in Resources */,
@@ -242,11 +284,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				67F7AD502354381B0072031F /* SMWKWebViewController.m in Sources */,
+				BFE5EB28235D78D8003C6672 /* CMLoginViewController.m in Sources */,
+				BFE5EB2C235D7C0A003C6672 /* RegexKitLite.m in Sources */,
 				67F7AD5323543A830072031F /* SMNavigationController.m in Sources */,
 				67FF74E223540C3D0022B1D4 /* ViewController.m in Sources */,
 				67FF74DC23540C3D0022B1D4 /* AppDelegate.m in Sources */,
 				67FF74ED23540C3F0022B1D4 /* main.m in Sources */,
 				67FF74DF23540C3D0022B1D4 /* SceneDelegate.m in Sources */,
+				BFE5EB30235D85D6003C6672 /* CGHttpClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +440,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-licucore",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vodone.o2o-bjguahao.demander.Interaction.OC-JS-WKWebView";
 				PRODUCT_NAME = "pushAndPop动画";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -413,6 +463,11 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-licucore",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vodone.o2o-bjguahao.demander.Interaction.OC-JS-WKWebView";
 				PRODUCT_NAME = "pushAndPop动画";

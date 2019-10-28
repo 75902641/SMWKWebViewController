@@ -31,7 +31,7 @@
                 
                 
                 function sck(){
-                    window.webkit.messageHandlers.pushViewController.postMessage("https://www.baidu.com");//传入url
+                    window.webkit.messageHandlers.pushViewController.postMessage("https://www.xxxx.com");//传入url 因示例所以传了个本地
                 }
             
             
@@ -53,7 +53,11 @@
                       
                 }
             
-            window.webkit.messageHandlers.loginViewControllerFunc.postMessage("");
+<!--            window.webkit.messageHandlers.loginViewControllerFunc.postMessage("");-->
+
+                function pressBackButton(){
+                window.webkit.messageHandlers. popViewControllerAnimatedFunc.postMessage("1");
+                }
             
                 </script>
             

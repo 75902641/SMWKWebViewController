@@ -13,6 +13,7 @@ typedef enum {
     defaultType,
     pushViewControllerType,
     presentViewControllerType,
+    jsBackType,
     
 }ControllerShowType;
 

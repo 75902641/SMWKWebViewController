@@ -34,7 +34,9 @@
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"loginViewControllerFunc"];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"popViewControllerAnimatedFunc"];
       [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"popToRootViewControllerAnimatedFunc"];
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"goBackFunc"];
 
+    
     if (self.showType == pushViewControllerType || self.showType == jsBackType) {
         SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
         if (navigation.viewControllers.count == 1 ) {
@@ -54,6 +56,8 @@
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"loginViewControllerFunc"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"popViewControllerAnimatedFunc"];//取消h5调取oc的方法
        [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"popToRootViewControllerAnimatedFunc"];//取消h5调取oc的方法
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"goBackFunc"];//取消h5调取oc的方法
+
 }
 
 - (void)backButtonFunc:(NSString *)sender{
@@ -413,13 +417,18 @@
         [self loginViewControllerFunc:sender];
     }
     if ([message.name isEqualToString:@"popViewControllerAnimatedFunc"]) {
-           NSString * sender = message.body;
-           [self popViewControllerAnimatedFunc:sender];
-       }
-       if ([message.name isEqualToString:@"popToRootViewControllerAnimatedFunc"]) {
-           NSString * sender = message.body;
-           [self popToRootViewControllerAnimatedFunc:sender];
-       }
+        NSString * sender = message.body;
+        [self popViewControllerAnimatedFunc:sender];
+    }
+    if ([message.name isEqualToString:@"popToRootViewControllerAnimatedFunc"]) {
+        NSString * sender = message.body;
+        [self popToRootViewControllerAnimatedFunc:sender];
+    }
+    if ([message.name isEqualToString:@"goBackFunc"]) {
+        NSString * sender = message.body;
+        [self goBackFunc:sender];
+    }
+
     
 }
 
@@ -492,6 +501,13 @@
        }
        [self.navigationController popToRootViewControllerAnimated:typeBool];
 }
+
+- (void)goBackFunc:(NSString *)type{
+    if ([self.wkWebView canGoBack]) {
+        [self.wkWebView goBack];
+    }
+}
+
 
 #pragma mark - 弹窗
 - (void)alertFunc{

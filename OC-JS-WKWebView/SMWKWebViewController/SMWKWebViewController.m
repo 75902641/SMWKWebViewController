@@ -32,8 +32,10 @@
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"getDeviceToken"];//注入h5调取oc的方法
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"rightBarButtonItemWithTitle"];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"loginViewControllerFunc"];
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"popViewControllerAnimatedFunc"];
+      [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"popToRootViewControllerAnimatedFunc"];
 
-    if (self.showType == pushViewControllerType) {
+    if (self.showType == pushViewControllerType || self.showType == jsBackType) {
         SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
         if (navigation.viewControllers.count == 1 ) {
             self->leftButton.hidden = YES;
@@ -50,7 +52,17 @@
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"getDeviceToken"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"rightBarButtonItemWithTitle"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"loginViewControllerFunc"];//取消h5调取oc的方法
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"popViewControllerAnimatedFunc"];//取消h5调取oc的方法
+       [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"popToRootViewControllerAnimatedFunc"];//取消h5调取oc的方法
+}
 
+- (void)backButtonFunc:(NSString *)sender{
+           
+       [self.wkWebView evaluateJavaScript:@"pressBackButton()" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+           //TODO
+           NSLog(@"%@ %@",response,error);
+       }];
+    
 }
 
 - (void)pressBackButton:(UIButton *)sender{
@@ -71,6 +83,10 @@
     }
     if (self.showType == pushViewControllerType) {
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    if (self.showType == jsBackType) {
+        [self backButtonFunc:@""];
     }
 }
 
@@ -107,7 +123,20 @@
         
         [self alertFunc];
         
-    }else{
+    }
+    else if ([self.urlString isEqualToString:@"https://www.xxxx.com"]) {
+        NSString *path = [[NSBundle mainBundle] bundlePath];
+        NSURL *baseURL = [NSURL fileURLWithPath:path];
+        NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
+        
+        
+        NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:nil];
+        [self.wkWebView loadHTMLString:htmlCont baseURL:baseURL];
+        
+    }
+    else{
         
         [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
         
@@ -282,7 +311,7 @@
     }
     
     
-    if (self.showType == pushViewControllerType) {
+    if (self.showType == pushViewControllerType || self.showType == jsBackType) {
         if ([strRequest isEqualToString:self.urlString]) {
             decisionHandler(WKNavigationActionPolicyAllow);
             return;
@@ -383,7 +412,14 @@
         NSString * sender = message.body;
         [self loginViewControllerFunc:sender];
     }
-    
+    if ([message.name isEqualToString:@"popViewControllerAnimatedFunc"]) {
+           NSString * sender = message.body;
+           [self popViewControllerAnimatedFunc:sender];
+       }
+       if ([message.name isEqualToString:@"popToRootViewControllerAnimatedFunc"]) {
+           NSString * sender = message.body;
+           [self popToRootViewControllerAnimatedFunc:sender];
+       }
     
 }
 
@@ -394,9 +430,13 @@
 //oc函数具体的实现
 - (void)pushViewController:(NSString *)url{
     
+    
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                SMWKWebViewController * webViewController = [storyboard instantiateViewControllerWithIdentifier:@"SMWKWebViewController"];
     webViewController.urlString = url;
+
+    webViewController.showType = self.showType;
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 
@@ -434,6 +474,23 @@
     CMLoginViewController * loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"CMLoginViewController"];
     [self.navigationController pushViewController:loginViewController animated:YES];
     
+}
+
+- (void)popViewControllerAnimatedFunc:(NSString *)type{
+    
+    BOOL typeBool = YES;
+    if (type && [type isEqualToString:@"0"]) {
+        typeBool = NO;
+    }
+    [self.navigationController popViewControllerAnimated:typeBool];
+}
+
+- (void)popToRootViewControllerAnimatedFunc:(NSString *)type{
+    BOOL typeBool = YES;
+       if (type && [type isEqualToString:@"0"]) {
+           typeBool = NO;
+       }
+       [self.navigationController popToRootViewControllerAnimated:typeBool];
 }
 
 #pragma mark - 弹窗
@@ -492,7 +549,27 @@
         
     }]];
     
-    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"js" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//           UITextField* userNameTextField = alertController.textFields.firstObject;
+           NSString *path = [[NSBundle mainBundle] bundlePath];
+           NSURL *baseURL = [NSURL fileURLWithPath:path];
+           NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"File" ofType:@"html"];
+           
+           
+           NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
+                                                          encoding:NSUTF8StringEncoding
+                                                             error:nil];
+           [self.wkWebView loadHTMLString:htmlCont baseURL:baseURL];
+           self.showType = jsBackType;
+        
+        SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
+
+           if (navigation.viewControllers.count == 1 ) {
+               self->leftButton.hidden = YES;
+           }else{
+               self->leftButton.hidden = NO;
+           }
+       }]];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField*_Nonnull textField) {
         

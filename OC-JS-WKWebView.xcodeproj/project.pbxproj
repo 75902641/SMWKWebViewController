@@ -18,6 +18,10 @@
 		67FF74E723540C3F0022B1D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67FF74E623540C3F0022B1D4 /* Assets.xcassets */; };
 		67FF74EA23540C3F0022B1D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67FF74E823540C3F0022B1D4 /* LaunchScreen.storyboard */; };
 		67FF74ED23540C3F0022B1D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF74EC23540C3F0022B1D4 /* main.m */; };
+		BF3CEBD42367E4340068C611 /* GHToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3CEBD32367E4330068C611 /* GHToastView.m */; };
+		BF3CEBD62367E5130068C611 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3CEBD52367E5130068C611 /* CoreServices.framework */; };
+		BFB70E6F2367E62500F4B80F /* GHLayoutHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB70E6D2367E62500F4B80F /* GHLayoutHelper.m */; };
+		BFB70E712367E66500F4B80F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB70E702367E66500F4B80F /* MobileCoreServices.framework */; };
 		BFE5EB25235D78C3003C6672 /* CMLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFE5EB24235D78C3003C6672 /* CMLogin.storyboard */; };
 		BFE5EB28235D78D8003C6672 /* CMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE5EB27235D78D8003C6672 /* CMLoginViewController.m */; };
 		BFE5EB2C235D7C0A003C6672 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE5EB2B235D7C0A003C6672 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -48,6 +52,12 @@
 		67FF74EC23540C3F0022B1D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		91BECD06E7FB8CA873355CF8 /* libPods-OC-JS-WKWebView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OC-JS-WKWebView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD1FAC72602FAE9B755D9BF8 /* Pods-OC-JS-WKWebView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OC-JS-WKWebView.release.xcconfig"; path = "Target Support Files/Pods-OC-JS-WKWebView/Pods-OC-JS-WKWebView.release.xcconfig"; sourceTree = "<group>"; };
+		BF3CEBD22367E4330068C611 /* GHToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHToastView.h; sourceTree = "<group>"; };
+		BF3CEBD32367E4330068C611 /* GHToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHToastView.m; sourceTree = "<group>"; };
+		BF3CEBD52367E5130068C611 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		BFB70E6D2367E62500F4B80F /* GHLayoutHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHLayoutHelper.m; sourceTree = "<group>"; };
+		BFB70E6E2367E62500F4B80F /* GHLayoutHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHLayoutHelper.h; sourceTree = "<group>"; };
+		BFB70E702367E66500F4B80F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BFE5EB24235D78C3003C6672 /* CMLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CMLogin.storyboard; sourceTree = "<group>"; };
 		BFE5EB26235D78D8003C6672 /* CMLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CMLoginViewController.h; sourceTree = "<group>"; };
 		BFE5EB27235D78D8003C6672 /* CMLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CMLoginViewController.m; sourceTree = "<group>"; };
@@ -62,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFB70E712367E66500F4B80F /* MobileCoreServices.framework in Frameworks */,
+				BF3CEBD62367E5130068C611 /* CoreServices.framework in Frameworks */,
 				F9913B8E2B0EB43865DDC8BA /* libPods-OC-JS-WKWebView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,6 +84,8 @@
 		41A49581673DE1743C014033 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFB70E702367E66500F4B80F /* MobileCoreServices.framework */,
+				BF3CEBD52367E5130068C611 /* CoreServices.framework */,
 				91BECD06E7FB8CA873355CF8 /* libPods-OC-JS-WKWebView.a */,
 			);
 			name = Frameworks;
@@ -117,6 +131,7 @@
 		67FF74D923540C3D0022B1D4 /* OC-JS-WKWebView */ = {
 			isa = PBXGroup;
 			children = (
+				BF3CEBD12367E42B0068C611 /* ToastView */,
 				BFE5EB2D235D85AF003C6672 /* network */,
 				BFE5EB29235D7C01003C6672 /* Utility */,
 				67A9FBD923555CBE00C2D480 /* pushAndPop动画.entitlements */,
@@ -154,6 +169,17 @@
 				BD1FAC72602FAE9B755D9BF8 /* Pods-OC-JS-WKWebView.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BF3CEBD12367E42B0068C611 /* ToastView */ = {
+			isa = PBXGroup;
+			children = (
+				BF3CEBD22367E4330068C611 /* GHToastView.h */,
+				BF3CEBD32367E4330068C611 /* GHToastView.m */,
+				BFB70E6E2367E62500F4B80F /* GHLayoutHelper.h */,
+				BFB70E6D2367E62500F4B80F /* GHLayoutHelper.m */,
+			);
+			path = ToastView;
 			sourceTree = "<group>";
 		};
 		BFE5EB23235D7887003C6672 /* login */ = {
@@ -286,6 +312,8 @@
 				67F7AD502354381B0072031F /* SMWKWebViewController.m in Sources */,
 				BFE5EB28235D78D8003C6672 /* CMLoginViewController.m in Sources */,
 				BFE5EB2C235D7C0A003C6672 /* RegexKitLite.m in Sources */,
+				BF3CEBD42367E4340068C611 /* GHToastView.m in Sources */,
+				BFB70E6F2367E62500F4B80F /* GHLayoutHelper.m in Sources */,
 				67F7AD5323543A830072031F /* SMNavigationController.m in Sources */,
 				67FF74E223540C3D0022B1D4 /* ViewController.m in Sources */,
 				67FF74DC23540C3D0022B1D4 /* AppDelegate.m in Sources */,

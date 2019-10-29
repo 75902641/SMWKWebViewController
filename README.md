@@ -49,6 +49,7 @@ window.webkit.messageHandlers.goBackFunc.postMessage("");
 9.openTheCameraFunc:
 js调用openTheCameraFunc函数，app会打开手机相机，拍照完的图片返回给js。
 window.webkit.messageHandlers.openTheCameraFunc.postMessage("");
+
 function selectImage(image){
 
 }
@@ -56,6 +57,7 @@ function selectImage(image){
 10.openAlbumFunc:
 js调用openAlbumFunc函数，app会打开手机相册，选择的图片返回给js。
 window.webkit.messageHandlers.openAlbumFunc.postMessage("");
+
 function selectImage(image){
 
 }

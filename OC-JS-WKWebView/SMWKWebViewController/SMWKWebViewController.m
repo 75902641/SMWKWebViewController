@@ -666,7 +666,13 @@
         
         UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
         if (image) {
+            NSData * imageData = [NSData dataWithData:UIImagePNGRepresentation(image)];
 
+            NSString * funcStr = [NSString stringWithFormat:@"selectImage('%@')", imageData];
+            [self.wkWebView evaluateJavaScript:funcStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                //TODO
+                NSLog(@"%@ %@",response,error);
+            }];
 
         }
         else {

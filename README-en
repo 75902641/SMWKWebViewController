@@ -1,0 +1,47 @@
+# WKWebViewPushViewController
+
+# Introduction
+Give H5 an app ios shell, wrap WKWebView, and have a pushViewController/presentViewController animation just like the next page. Click to return to have a popViewControllerAnimated/dismissViewControllerAnimated animation, compatible with web calling, js and oc call each other, message push and other functions. .
+# Instructions for use
+Each time you open the app, there will be a popup window, you can enter your own URL, and then select the desired effect, the effect has default, present, push, js:
+Default: (must enter the URL) All h5 presentations are only displayed in one viewController, there is no animation.
+Present: (must enter the URL) Whenever you open a new web page, there will be a presentViewController animation effect (pushing from bottom to top), each time you open a new web page, you will create a new viewController to display the current web page. Clicking the back button will fade the effect from top to bottom.
+Push: (you can not enter the URL) whenever you open a new web page, there will be a pushViewController animation effect (from right to left), each time you open a new page will create a new viewController to display the current page . Clicking the back button will disappear from left to right.
+Js: (you can not enter the URL) The effect is the same as the push effect, that is, the return key is controlled by js.
+The above is the effect that everyone shows. In the project, all the above functions can be mixed, you can use the default effect, and the app is called by js to achieve the desired effect, for example:
+H5 does not want to open a new viewController to display on the current page. When you need to open a new interface, you call the pushViewController method. When you click and return, you don't want to return to the previous page. If you want to return to the specified page, you will call the method returned by the app. The app will trigger js. The method, by js to control which page should go.
+
+# Function point and function call
+1.js get ios deviceToken, the server can push the app according to deviceToken
+
+2. Open camera, Bluetooth, contacts, positioning, microphone, media library access
+
+3.pushViewController:
+Js call pushViewController needs to pass a url parameter, url is the URL that you want the next interface to display, as follows
+window.webkit.messageHandlers.pushViewController.postMessage("https://www.xxxxx.com");
+
+4.getDeviceToken:
+When js calls the getDeviceToken function, it will trigger the app's getDeviceToken function. When the app gets the deviceToken, it will trigger the jS getDeviceTokenFunc() function and return the deviceToken as follows:
+window.webkit.messageHandlers.getDeviceToken.postMessage("");//Go to the client to get the deviceToken returned from the following method
+Function getDeviceTokenFunc(d) {//This function is written in js Get deviceToken is passed back from d
+
+}
+
+5.rightBarButtonItemWithTitle:
+Js calls the rightBarButtonItemWithTitle function, the app will create a button in the upper right corner of the navigation. When clicked, it will trigger the jS pressRightButton() function, which can be processed by js.
+window.webkit.messageHandlers.rightBarButtonItemWithTitle.postMessage("h5button");
+Function pressRightButton() {
+
+}
+
+6.popViewControllerAnimatedFunc:
+Js needs to pass a type value when calling popViewControllerAnimatedFunc function, "0" do not animate, "1" to animate, the app will return to the previous page after the trigger.
+window.webkit.messageHandlers.popViewControllerAnimatedFunc.postMessage("1");
+                       
+7. popToRootViewControllerAnimatedFunc:
+Js calls the popToRootViewControllerAnimatedFunc function to pass a type value, "0" do not animate, "1" to animate, the app will return to the first page after the trigger, the first page of the current stack.
+window.webkit.messageHandlers.popToRootViewControllerAnimatedFunc.postMessage("1");
+
+8.goBackFunc
+Js calls the goBackFunc function, the app will first determine whether the current h5 page can canGoBack, if yes go2012, this function is used when a web page loads multiple h5 clicks back button.
+window.webkit.messageHandlers.goBackFunc.postMessage("");

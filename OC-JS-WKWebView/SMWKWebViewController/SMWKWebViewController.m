@@ -11,8 +11,11 @@
 #import <WebKit/WebKit.h>
 #import "AppDelegate.h"
 #import "CMLoginViewController.h"
+#import "GHToastView.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
-@interface SMWKWebViewController ()<WKScriptMessageHandler, WKNavigationDelegate>{
+
+@interface SMWKWebViewController ()<WKScriptMessageHandler, WKNavigationDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>{
     
     BOOL deviceTokenBool;
     UIButton *leftButton;
@@ -35,7 +38,10 @@
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"popViewControllerAnimatedFunc"];
       [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"popToRootViewControllerAnimatedFunc"];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"goBackFunc"];
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"openTheCameraFunc"];
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"openAlbumFunc"];
 
+    
     
     if (self.showType == pushViewControllerType || self.showType == jsBackType) {
         SMNavigationController * navigation = (SMNavigationController *)[AppDelegate getWindow].rootViewController;
@@ -57,6 +63,9 @@
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"popViewControllerAnimatedFunc"];//取消h5调取oc的方法
        [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"popToRootViewControllerAnimatedFunc"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"goBackFunc"];//取消h5调取oc的方法
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"openTheCameraFunc"];//取消h5调取oc的方法
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"openAlbumFunc"];//取消h5调取oc的方法
+
 
 }
 
@@ -428,8 +437,16 @@
         NSString * sender = message.body;
         [self goBackFunc:sender];
     }
-
+    if ([message.name isEqualToString:@"openTheCameraFunc"]) {
+        NSString * sender = message.body;
+        [self openTheCameraFunc:sender];
+    }
+    if ([message.name isEqualToString:@"openAlbumFunc"]) {
+        NSString * sender = message.body;
+        [self openAlbumFunc:sender];
+    }
     
+   
 }
 
 #pragma mark - js的调用
@@ -507,6 +524,46 @@
         [self.wkWebView goBack];
     }
 }
+
+- (void)openTheCameraFunc:(NSString *)type{
+    
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){// 判断是否有摄像头
+                   
+                   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+                   picker.delegate = self;
+                   picker.allowsEditing = YES;
+                   picker.videoQuality = UIImagePickerControllerQualityTypeLow;
+                   picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+                   picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                   picker.modalPresentationStyle = UIModalPresentationFullScreen;
+                   
+                   [self presentViewController:picker animated:YES completion:^{}];
+                   
+               } else {
+                   [GHToastView showMessage:@"没有摄像头"];
+                   
+               }
+}
+
+- (void)openAlbumFunc:(NSString *)type{
+    
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.mediaTypes = [NSArray arrayWithObject:(NSString*)kUTTypeImage];
+        picker.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        [self presentViewController:picker animated:YES completion:nil];
+        
+    } else {
+        
+        [GHToastView showMessage:@"没有摄像头"];
+        
+    }
+}
+
 
 
 #pragma mark - 弹窗
@@ -597,6 +654,36 @@
     [self presentViewController:alertController animated:YES completion:nil];
     
     
+}
+
+
+#pragma mark - UIIMagePickerController Delegate
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    if ([mediaType isEqualToString:@"public.image"]) {
+        
+        UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+        if (image) {
+
+
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
+                                                            message:@"无法读取图片，请重试"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 

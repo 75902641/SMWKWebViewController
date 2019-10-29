@@ -31,10 +31,20 @@ function getDeviceTokenFunc(d) {//此函数是写在js里 获取deviceToken 从d
 js调用rightBarButtonItemWithTitle函数，app会在导航的右上角创建按钮，点击的时候会触发js的pressRightButton()函数，js可以对此进行处理
 window.webkit.messageHandlers.rightBarButtonItemWithTitle.postMessage("h5按钮");
 function pressRightButton() {
-}                           
+
+}    
+
+6.popViewControllerAnimatedFunc:
+js调用popViewControllerAnimatedFunc函数时需要传入一个type值，"0"不要动画、"1"要动画，触发后app会返回上一页。
+window.webkit.messageHandlers.popViewControllerAnimatedFunc.postMessage("1");
                        
+7.popToRootViewControllerAnimatedFunc:
+js调用popToRootViewControllerAnimatedFunc函数时需要传入一个type值，"0"不要动画、"1"要动画，触发后app会返回首页，就当前堆栈的第一页。
+window.webkit.messageHandlers.popToRootViewControllerAnimatedFunc.postMessage("1");
 
-
+8.goBackFunc
+js调用goBackFunc函数，app会先判断当前h5页面是否可以canGoBack，如果yes则goBack，此函数用于一个网页加载多个h5点击返回按钮的时候。
+window.webkit.messageHandlers.goBackFunc.postMessage("");
 
 
 

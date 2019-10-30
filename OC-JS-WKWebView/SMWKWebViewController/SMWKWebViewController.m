@@ -684,7 +684,7 @@
             
         }
     }
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -694,7 +694,7 @@
            NSLog(@"%@ %@",response,error);
        }];
 
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

@@ -676,12 +676,12 @@
 
         }
         else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
-                                                            message:@"无法读取图片，请重试"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"确定"
-                                                  otherButtonTitles:nil, nil];
-            [alert show];
+            
+            [self.wkWebView evaluateJavaScript:@"uploadingImageFailed()" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                                   //TODO
+                                   NSLog(@"%@ %@",response,error);
+                               }];
+            
         }
     }
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -689,6 +689,11 @@
 
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self.wkWebView evaluateJavaScript:@"imagePickerControllerDidCancel()" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+           //TODO
+           NSLog(@"%@ %@",response,error);
+       }];
+
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 

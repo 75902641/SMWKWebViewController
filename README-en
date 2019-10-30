@@ -58,9 +58,9 @@ function selectImage(image){
 
 }
 
-11. When clicking the photo or the album's Cancel button, the js imagePickerControllerDidCancel() function will be triggered.
+11. When clicking the photo or the album's Cancel button, the js imageDidCancel() function will be triggered.
 
-function imagePickerControllerDidCancel(){
+function imageDidCancel(){
 
 }
 

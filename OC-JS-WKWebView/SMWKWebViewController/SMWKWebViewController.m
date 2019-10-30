@@ -689,7 +689,7 @@
 
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self.wkWebView evaluateJavaScript:@"imagePickerControllerDidCancel()" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+    [self.wkWebView evaluateJavaScript:@"imageDidCancel()" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
            //TODO
            NSLog(@"%@ %@",response,error);
        }];

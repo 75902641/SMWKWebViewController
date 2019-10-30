@@ -57,3 +57,15 @@ window.webkit.messageHandlers.openAlbumFunc.postMessage("");
 function selectImage(image){
 
 }
+
+11. When clicking the photo or the album's Cancel button, the js imagePickerControllerDidCancel() function will be triggered.
+
+function imagePickerControllerDidCancel(){
+
+}
+
+12. When the selection of the image fails, it will trigger the uploadingImageFailed() function of js.
+
+function uploadingImageFailed(){
+
+}

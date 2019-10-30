@@ -60,11 +60,16 @@
                 }
             
 <!--            window.webkit.messageHandlers.openTheCameraFunc.postMessage("");-->//调用照相机
-<!--                window.webkit.messageHandlers.openAlbumFunc.postMessage("");//调用相册-->
+<!--               window.webkit.messageHandlers.openAlbumFunc.postMessage("");-->//调用相册
 
                 function selectImage(image){
 
                 }
+            
+            function imageDidCancel(){
+                var x = document.getElementById("pTitle");
+                x.innerHTML = "点了取消";
+            }
             
                 </script>
             

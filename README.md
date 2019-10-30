@@ -62,9 +62,9 @@ function selectImage(image){
 
 }
 
-11.当点击拍照或者相册的取消按钮，会触发js的imagePickerControllerDidCancel()函数
+11.当点击拍照或者相册的取消按钮，会触发js的imageimageDidCancel()函数
 
-function imagePickerControllerDidCancel(){
+function imageDidCancel(){
 
 }
 

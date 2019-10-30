@@ -42,10 +42,37 @@ window.webkit.messageHandlers.popViewControllerAnimatedFunc.postMessage("1");
 js调用popToRootViewControllerAnimatedFunc函数时需要传入一个type值，"0"不要动画、"1"要动画，触发后app会返回首页，就当前堆栈的第一页。
 window.webkit.messageHandlers.popToRootViewControllerAnimatedFunc.postMessage("1");
 
-8.goBackFunc
+8.goBackFunc:
 js调用goBackFunc函数，app会先判断当前h5页面是否可以canGoBack，如果yes则goBack，此函数用于一个网页加载多个h5点击返回按钮的时候。
 window.webkit.messageHandlers.goBackFunc.postMessage("");
 
+9.openTheCameraFunc:
+js调用openTheCameraFunc函数，app会打开手机相机，拍照完的图片返回给js。
+window.webkit.messageHandlers.openTheCameraFunc.postMessage("");
+
+function selectImage(image){
+
+}
+
+10.openAlbumFunc:
+js调用openAlbumFunc函数，app会打开手机相册，选择的图片返回给js。
+window.webkit.messageHandlers.openAlbumFunc.postMessage("");
+
+function selectImage(image){
+
+}
+
+11.当点击拍照或者相册的取消按钮，会触发js的imagePickerControllerDidCancel()函数
+
+function imagePickerControllerDidCancel(){
+
+}
+
+12.当选择图片失败，会触发js的uploadingImageFailed()函数
+
+function uploadingImageFailed(){
+
+}
 
 
 

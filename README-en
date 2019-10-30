@@ -45,3 +45,27 @@ window.webkit.messageHandlers.popToRootViewControllerAnimatedFunc.postMessage("1
 8.goBackFunc
 Js calls the goBackFunc function, the app will first determine whether the current h5 page can canGoBack, if yes go2012, this function is used when a web page loads multiple h5 clicks back button.
 window.webkit.messageHandlers.goBackFunc.postMessage("");
+
+9.openTheCameraFunc: js calls the openTheCameraFunc function, the app will open the phone camera, and the finished picture will be returned to js.
+window.webkit.messageHandlers.openTheCameraFunc.postMessage("");
+function selectImage(image){
+
+}
+
+10.openAlbumFunc: js calls the openAlbumFunc function, the app will open the phone album, and the selected image will be returned to js. 
+window.webkit.messageHandlers.openAlbumFunc.postMessage("");
+function selectImage(image){
+
+}
+
+11. When clicking the photo or the album's Cancel button, the js imagePickerControllerDidCancel() function will be triggered.
+
+function imagePickerControllerDidCancel(){
+
+}
+
+12. When the selection of the image fails, it will trigger the uploadingImageFailed() function of js.
+
+function uploadingImageFailed(){
+
+}

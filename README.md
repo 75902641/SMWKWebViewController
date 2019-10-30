@@ -63,11 +63,13 @@ function selectImage(image){
 }
 
 11.当点击拍照或者相册的取消按钮，会触发js的imagePickerControllerDidCancel()函数
+
 function imagePickerControllerDidCancel(){
 
 }
 
 12.当选择图片失败，会触发js的uploadingImageFailed()函数
+
 function uploadingImageFailed(){
 
 }

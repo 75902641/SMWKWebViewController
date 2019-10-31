@@ -75,3 +75,6 @@ When js calls leftButtonHidden, the app will hide or display the return button o
 window.webkit.messageHandlers.leftButtonHidden.postMessage("1");
 
 14. When you click the back button on the left side of the line, the app's pressBackButton function will trigger the backButtonFunc function of js. js can write specific content in this function (for example, return, go to other pages, etc.)
+function backButtonFunc(){
+
+}

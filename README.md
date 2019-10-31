@@ -78,5 +78,8 @@ function uploadingImageFailed(){
 js调用leftButtonHidden时，app会隐藏或显示导航左边的返回按钮，要传入type参数，“0”是隐藏，1是显示
 window.webkit.messageHandlers.leftButtonHidden.postMessage("1");
 
+14.当点击当行左边返回键时，app的pressBackButton函数会触发js的backButtonFunc函数，js可以在这个函数里写具体的内容（例如返回、去其他页等）
+function backButtonFunc(){
 
+}
 

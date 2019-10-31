@@ -40,6 +40,7 @@
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"goBackFunc"];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"openTheCameraFunc"];
     [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"openAlbumFunc"];
+    [self.wkWebView.configuration.userContentController addScriptMessageHandler:self name:@"leftButtonHidden"];
 
     
     
@@ -65,6 +66,7 @@
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"goBackFunc"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"openTheCameraFunc"];//取消h5调取oc的方法
     [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"openAlbumFunc"];//取消h5调取oc的方法
+    [self.wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"leftButtonHidden"];//取消h5调取oc的方法
 
 
 }
@@ -445,7 +447,10 @@
         NSString * sender = message.body;
         [self openAlbumFunc:sender];
     }
-    
+    if ([message.name isEqualToString:@"leftButtonHidden"]) {
+           NSString * sender = message.body;
+           [self leftButtonHidden:sender];
+       }
    
 }
 
@@ -564,7 +569,15 @@
     }
 }
 
+- (void)leftButtonHidden:(NSString *)type{
+    
+    if ([type isEqualToString:@"1"]) {
+        leftButton.hidden = NO;
+    }else{
+        leftButton.hidden = YES;
 
+    }
+}
 
 #pragma mark - 弹窗
 - (void)alertFunc{

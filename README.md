@@ -74,6 +74,9 @@ function uploadingImageFailed(){
 
 }
 
+13.leftButtonHidden:
+js调用leftButtonHidden时，app会隐藏或显示导航左边的返回按钮，要传入type参数，“0”是隐藏，1是显示
+window.webkit.messageHandlers.leftButtonHidden.postMessage("1");
 
 
 

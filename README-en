@@ -72,5 +72,4 @@ function uploadingImageFailed(){
 
 13.leftButtonHidden:
 When js calls leftButtonHidden, the app will hide or display the return button on the left side of the navigation. The type parameter should be passed in. "0" is hidden and 1 is displayed.
-
 window.webkit.messageHandlers.leftButtonHidden.postMessage("1");

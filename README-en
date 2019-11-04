@@ -73,3 +73,8 @@ function uploadingImageFailed(){
 13.leftButtonHidden:
 When js calls leftButtonHidden, the app will hide or display the return button on the left side of the navigation. The type parameter should be passed in. "0" is hidden and 1 is displayed.
 window.webkit.messageHandlers.leftButtonHidden.postMessage("1");
+
+14. When you click the back button on the left side of the line, the app's pressBackButton function will trigger the backButtonFunc function of js. js can write specific content in this function (for example, return, go to other pages, etc.)
+function backButtonFunc(){
+
+}

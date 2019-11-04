@@ -10,6 +10,9 @@ push:(可以不输入网址)每当打开一个新的网页，都会有pushViewCo
 js:(可以不输入网址)效果和push效果一样，就是返回键是由js控制。
 以上是给大家展示的效果，在项目中上面所有的功能可以混合着用，可以使用默认的效果，由js调用app实现想要的效果，例如:
 h5在当前页面不想打开新的viewController来展示，当需要打开一个新的界面就调用pushViewController方法，当点击返回不想返回到上一页想返回到指定页面，就调用app返回的方法，app会触发js的方法，由js来控制应该去哪一页。
+在现实的业务中，可以把这些效果混合起来用。
+
+h5在当前页面不想打开新的viewController来展示，当需要打开一个新的界面就调用pushViewController方法，当点击返回不想返回到上一页想返回到指定页面，就调用app返回的方法，app会触发js的方法，由js来控制应该去哪一页。
 
 # 功能点和函数调用
 1.js获取ios的deviceToken，服务器可以根据deviceToken给app发推送
@@ -78,5 +81,9 @@ function uploadingImageFailed(){
 js调用leftButtonHidden时，app会隐藏或显示导航左边的返回按钮，要传入type参数，“0”是隐藏，1是显示
 window.webkit.messageHandlers.leftButtonHidden.postMessage("1");
 
+14.当点击当行左边返回键时，app的pressBackButton函数会触发js的backButtonFunc函数，js可以在这个函数里写具体的内容（例如返回、去其他页等）
 
+function backButtonFunc(){
+
+}
 

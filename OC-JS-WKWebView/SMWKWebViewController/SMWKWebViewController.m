@@ -311,6 +311,14 @@
     
     NSString *scheme = [navigationAction.request.URL scheme];
     
+    //打开微信 支付宝支付
+    if ([strRequest hasPrefix:@"weixin://"] || [strRequest hasPrefix:@"alipay://"]) {
+           
+           decisionHandler(WKNavigationActionPolicyAllow);
+           [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strRequest]];
+           return;
+       }
+    
     //h5页面打电话 单独处理
     if ([scheme isEqualToString:@"tel"]) {
         

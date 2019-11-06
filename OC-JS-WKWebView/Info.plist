@@ -84,5 +84,34 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>weibosdk2.5</string>
+		<string>weibosdk</string>
+		<string>sinaweibohdsso</string>
+		<string>sinaweibosso</string>
+		<string>sinaweibohd</string>
+		<string>sinaweibo</string>
+		<string>mttbrowser</string>
+		<string>mqqopensdkfriend</string>
+		<string>mqqopensdkdataline</string>
+		<string>mqqgamebindinggroup</string>
+		<string>mqqopensdkgrouptribeshare</string>
+		<string>tencentapi.qq.reqContent</string>
+		<string>mqqOpensdkSSoLogin</string>
+		<string>wtloginmqq2</string>
+		<string>mqqbrowser</string>
+		<string>mqqwpa</string>
+		<string>mqqapiwallet</string>
+		<string>mqqopensdkapiV2</string>
+		<string>mqqopensdkapiV3</string>
+		<string>mqqapi</string>
+		<string>mqq</string>
+		<string>alipayshare</string>
+		<string>safepay</string>
+		<string>alipay</string>
+		<string>weixin</string>
+		<string>wechat</string>
+	</array>
 </dict>
 </plist>
